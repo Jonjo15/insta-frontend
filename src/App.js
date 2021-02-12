@@ -4,7 +4,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Auth} />
+        <Route exact path="/auth" component={Auth} />
       </Switch>
     </BrowserRouter>
   );
