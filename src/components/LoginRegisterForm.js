@@ -1,21 +1,29 @@
 import React, {useState} from 'react'
 import { Container, Form, Button, Input } from 'semantic-ui-react'
 import GoogleLogin from 'react-google-login';
+import { useAuth } from '../context/auth/AuthContext';
 
 export default function LoginRegisterForm() {
+    const {login, register, googleSignIn, state: {error}} = useAuth()
     const [isLogin, setIsLogin] = useState(false)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
-        console.log("submit  ", username, password, email)
+        if(isLogin) {
+            login({email, password})
+        } else {
+            register({username, email , password})  
+        }
     }
-    const handleGoogle = e => {
-        console.log("google")
+    const handleGoogle = async response => {
+        console.log(response.accessToken)
+        await googleSignIn({access_token: response.accessToken})
     }
     return (
         <Container>
+            {error && <p>{error}</p>}
             <Form onSubmit={handleSubmit}>
                 {!isLogin && <Form.Field required>
                 <label>Username</label>
@@ -35,11 +43,10 @@ export default function LoginRegisterForm() {
                 <Icon name='google plus' /> Sign In With Google
             </Button> */}
             <GoogleLogin
-                clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                clientId="475278432981-mgmm2m3plbfcr09htfdjnvd0ha1ik99j.apps.googleusercontent.com"
                 buttonText="Sign In With Google"
                 onSuccess={handleGoogle}
                 onFailure={handleGoogle}
-                cookiePolicy={'single_host_origin'}
             />
             <div className="m-auto">
                 <span>{isLogin ? "Don't have an account? Register" : "Alredy have an account? Log In"}</span>

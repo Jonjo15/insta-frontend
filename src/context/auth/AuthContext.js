@@ -1,6 +1,6 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import authReducer from "./AuthReducer"
-import {FINISH_LOADING, LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER, UPDATE_USER} from "./types"
+import { LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER, UPDATE_USER} from "./types"
 import axios from "axios"
 const AuthContext = createContext();
 
@@ -25,9 +25,8 @@ export function AuthProvider({children}) {
         axios.get("http://localhost:5000/users/me").then(res => {
             console.log(res.data)
             dispatch({type: SET_USER, payload: res.data})
-        }).catch(err => {
-            dispatch({type: SET_ERRORS, payload: err})
-            dispatch({type:FINISH_LOADING})
+        }).catch(error => {
+            dispatch({type: SET_ERRORS, payload: error})
         })
     }, [])
 
@@ -61,10 +60,10 @@ export function AuthProvider({children}) {
     const logout = () => {
         dispatch({type: LOG_OUT})
     }
-    const fbSignIn = async(data) => {
+    const googleSignIn = async(data) => {
         dispatch({type: LOADING_USER})
         try {
-            const res = await axios.post("http://localhost:5000/auth/facebook/token", data)
+            const res = await axios.post("http://localhost:5000/auth/google", data)
             dispatch({type: SET_USER, payload: res.data})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: error})
@@ -77,8 +76,8 @@ export function AuthProvider({children}) {
       register, 
       login,
       logout, 
-      fbSignIn, 
-      updateUser
+      updateUser,
+      googleSignIn
     }
       return (
           <AuthContext.Provider value={value}>
