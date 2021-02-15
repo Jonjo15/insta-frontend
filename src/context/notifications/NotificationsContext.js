@@ -13,7 +13,7 @@ export const initialState = {
     error: null
 };
 
-export function FeedProvider({children}) {
+export function NotificationsProvider({children}) {
     const [state, dispatch] = useReducer(notificationsReducer, initialState)
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
 
