@@ -1,9 +1,12 @@
 import React from 'react'
 import {Link} from "react-router-dom"
 import {Container, Menu, Dropdown, Button} from "semantic-ui-react"
+import { useAuth } from '../context/auth/AuthContext'
 export default function Navbar() {
+    const {logout} = useAuth()
     const handleLogout = e => {
         console.log("logging out")
+        logout()
     }
     return (
         <Container>

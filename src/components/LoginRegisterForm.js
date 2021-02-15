@@ -2,9 +2,10 @@ import React, {useState} from 'react'
 import { Container, Form, Button, Input } from 'semantic-ui-react'
 import GoogleLogin from 'react-google-login';
 import { useAuth } from '../context/auth/AuthContext';
-
+import {useHistory} from "react-router-dom"
 export default function LoginRegisterForm() {
     const {login, register, googleSignIn, state: {error}} = useAuth()
+    const history = useHistory()
     const [isLogin, setIsLogin] = useState(false)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -13,8 +14,10 @@ export default function LoginRegisterForm() {
         e.preventDefault()
         if(isLogin) {
             login({email, password})
+            history.push("/")
         } else {
             register({username, email , password})  
+            history.push("/")
         }
     }
     const handleGoogle = async response => {
