@@ -20,7 +20,7 @@ export function FeedProvider({children}) {
 
     useEffect(() => {
         //TODO: FINISH
-        axios.get("http://localhotst:5000/").then(res => {
+        axios.get("http://localhost:5000/").then(res => {
             console.log(res.data)
         }).catch(err => {
             console.error(err)

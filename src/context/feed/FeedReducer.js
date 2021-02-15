@@ -1,6 +1,6 @@
 import { SET_SELECTED_USER, UPDATE_FEED, UPDATE_USER } from "./types";
 
-export default function authReducer (state, action){
+export default function feedReducer (state, action){
     switch(action.type) {
         case UPDATE_FEED: 
             return {
