@@ -2,11 +2,17 @@ import React from 'react'
 import {Link} from "react-router-dom"
 import {Container, Menu, Dropdown, Button} from "semantic-ui-react"
 import { useAuth } from '../context/auth/AuthContext'
+import { useNotifications } from '../context/notifications/NotificationsContext'
 export default function Navbar() {
     const {logout} = useAuth()
+    const {state: { notifications}} = useNotifications()
     const handleLogout = e => {
         console.log("logging out")
         logout()
+    }
+    const markAllRead = e => {
+        //TODO:
+        console.log("hey")
     }
     return (
         <Container>
@@ -25,7 +31,10 @@ export default function Navbar() {
                 </Dropdown>
                 <Dropdown icon="alarm">
                     <Dropdown.Menu>
-                        <Dropdown.Item text="You have no notifications"/>
+                        {/* TODO: REFACTOR NOTIFICATIONS INTO ITS OWN COMPONENTS */}
+                        {notifications?.length === 0 && <Dropdown.Item text="You have no notifications"/>}
+                        {notifications?.length > 0 && notifications.map(n => <Dropdown.Item as={Link} to={"/posts/" + n.postId} key={n._id} text={n.sender.username} />)}
+                        {notifications.filter(n => n.seen === false).length > 0 && <Dropdown.Item icon="trash" as={Button} text="Mark all notifications read" onClick={markAllRead}/>}
                     </Dropdown.Menu>
                 </Dropdown>
                 <Dropdown icon="user">

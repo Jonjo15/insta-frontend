@@ -1,10 +1,11 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import notificationsReducer from "./NotificationsReducer"
+import {SET_NOTIFICATIONS, UPDATE_USER, MARK_NOTIFICATIONS_READ} from "./types"
 // import { LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER, UPDATE_USER} from "./types"
 import axios from "axios"
 const NotificationsContext = createContext();
 
-export function useFeed() {
+export function useNotifications() {
     return useContext(NotificationsContext)
 }
 
@@ -19,8 +20,8 @@ export function NotificationsProvider({children}) {
 
     useEffect(() => {
         //TODO: FINISH
-        axios.get("http://localhost:5000/notifications").then(res => {
-            console.log(res.data)
+        axios.get("http://localhost:5000/notifications/").then(res => {
+            dispatch({type: SET_NOTIFICATIONS, payload: res.data})
         }).catch(err => {
             console.error(err)
         })

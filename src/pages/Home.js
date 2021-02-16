@@ -8,7 +8,7 @@ export default function Home() {
     return (
         authenticated ? (<Container className="mt-50">
             <h1 className="center">Home </h1>
-            {currentUser && <p>Hello {currentUser.username}</p>}
+            {currentUser && <p>Hello {currentUser.username} {currentUser._id}</p>}
         </Container>) : <Redirect to="/auth"/>
         
     )

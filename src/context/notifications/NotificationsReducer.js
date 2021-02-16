@@ -1,4 +1,4 @@
-import { MARK_NOTIFICATIONS_READ, UPDATE_USER } from "./types";
+import { MARK_NOTIFICATIONS_READ, UPDATE_USER, SET_NOTIFICATIONS } from "./types";
 
 export default function notificationsReducer (state, action){
     switch(action.type) {
@@ -11,6 +11,12 @@ export default function notificationsReducer (state, action){
             return {
                 ...state,
                 //TODO:
+            }
+        case SET_NOTIFICATIONS:
+          console.log(action.payload)
+            return {
+              ...state,
+              notifications: action.payload.notifications
             }
       default:
         return state;
