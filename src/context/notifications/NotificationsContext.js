@@ -1,6 +1,6 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import notificationsReducer from "./NotificationsReducer"
-import {SET_NOTIFICATIONS, MARK_ALL_READ} from "./types"
+import {SET_NOTIFICATIONS, MARK_ALL_READ, SET_ERROR} from "./types"
 // import { LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER, UPDATE_USER} from "./types"
 import axios from "axios"
 const NotificationsContext = createContext();
@@ -29,9 +29,13 @@ export function NotificationsProvider({children}) {
     
     const markNotificationsRead = async (data) => {
         //TODO: CHeck if this is the right route
-        const res = axios.put("http://localhost:5000/notifications/", data)
-        console.log(res.data)
-        dispatch({type: MARK_ALL_READ})
+        try {
+            axios.put("http://localhost:5000/notifications/", data)
+            dispatch({type: MARK_ALL_READ})
+        }catch(err) {
+            dispatch({type: SET_ERROR})
+        }
+        
     }
     // const updateUser = (data) => {
     //     dispatch({type: UPDATE_USER, payload: data})

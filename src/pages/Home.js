@@ -9,6 +9,7 @@ export default function Home() {
         authenticated ? (<Container className="mt-50">
             <h1 className="center">Home </h1>
             {currentUser && <p>Hello {currentUser.username} {currentUser._id}</p>}
+            <p>{JSON.stringify(currentUser)}</p>
         </Container>) : <Redirect to="/auth"/>
         
     )
