@@ -18,13 +18,14 @@ export const initialState = {
 
 export function AuthProvider({children}) {
     const [state, dispatch] = useReducer(authReducer, initialState)
-    axios.defaults.headers.common['Authorization'] = state.token;
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
 
     useEffect(() => {
         //TODO: TEST THIS OUT A BIT
         axios.get("http://localhost:5000/users/me").then(res => {
             console.log(res.data)
-            dispatch({type: SET_USER, payload: res.data})
+            const user = {user: res.data.user[0]}
+            dispatch({type: SET_USER, payload: user})
         }).catch(error => {
             dispatch({type: SET_ERRORS, payload: error})
         })
