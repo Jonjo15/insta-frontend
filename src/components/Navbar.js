@@ -23,19 +23,15 @@ export default function Navbar() {
             to="/"
             />
             <Menu.Menu position="right">
+                {/* TODO: MAKE THIS LOWER STUFF INTO ITS OWN COMPONENT */}
                 <Dropdown icon="like">
                     <Dropdown.Menu>
                         {currentUser?.follow_requests?.length === 0 && <Dropdown.Item text="You have no follow requests"/>}
                         {currentUser?.follow_requests.map(f => <Dropdown.Item as={Link} to={"/users/" + f._id} text={requestText(f.username)} />)}
                     </Dropdown.Menu>
                 </Dropdown>
-                
-                {/* <Menu.Item
-                    name="Notifications"
-                    as={Notifications}
-                 /> */}
                 <Notifications />
-                
+                {/* TODO: MAKE THIS LOWER STUFF INTO ITS OWN COMPONENT */}
                 <Dropdown icon="user">
                     <Dropdown.Menu>
                         <Dropdown.Item icon="user" text="Profile" as={Link} to="/profile"/>
