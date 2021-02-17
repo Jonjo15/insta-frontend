@@ -30,6 +30,7 @@ export default function Navbar() {
                     name="Notifications"
                     as={Notifications}
                  /> */}
+                <Notifications />
                 
                 <Dropdown icon="user">
                     <Dropdown.Menu>
