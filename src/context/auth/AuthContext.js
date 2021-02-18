@@ -1,6 +1,6 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import authReducer from "./AuthReducer"
-import { LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER, UPDATE_USER} from "./types"
+import { LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
 import axios from "axios"
 const AuthContext = createContext();
 
@@ -72,6 +72,7 @@ export function AuthProvider({children}) {
         }
     }
     const acceptRequest = async(id) => {
+        //TODO: FINSIH
         try {
             const res = await axios.post("http://localhost:5000/users/"+ id + "/accept")
             console.log(res.data)
@@ -81,6 +82,7 @@ export function AuthProvider({children}) {
         }
     }
     const rejectRequest = async(id) => {
+        // TODO: FINISH
         try {
             const res = await axios.post("http://localhost:5000/users/" + id + "/reject")
             console.log(res.data)
@@ -89,6 +91,7 @@ export function AuthProvider({children}) {
         }
     }
     const sendRequest = async(id) => {
+        //TODO: FINSIH
         try {
             const res = await axios.post("http://localhost:5000/users/" + id)
             console.log(res.data)
