@@ -43,9 +43,9 @@ export function AuthProvider({children}) {
             console.error(error)
         }
     }
-    const updateUser = (data) => {
-        dispatch({type: UPDATE_USER, payload: data})
-    }
+    // const updateUser = (data) => {
+    //     dispatch({type: UPDATE_USER, payload: data})
+    // }
     const login = async (data) => {
         dispatch({type: LOADING_USER})
         try {
@@ -71,14 +71,42 @@ export function AuthProvider({children}) {
             console.error(error)
         }
     }
+    const acceptRequest = async(id) => {
+        try {
+            const res = await axios.post("http://localhost:5000/users/"+ id + "/accept")
+            console.log(res.data)
+        }
+        catch(error) {
+            dispatch({type: SET_ERRORS, payload: error})
+        }
+    }
+    const rejectRequest = async(id) => {
+        try {
+            const res = await axios.post("http://localhost:5000/users/" + id + "/reject")
+            console.log(res.data)
+        }catch(err) {
+            dispatch({type: SET_ERRORS, payload: err})
+        }
+    }
+    const sendRequest = async(id) => {
+        try {
+            const res = await axios.post("http://localhost:5000/users/" + id)
+            console.log(res.data)
+        } catch(err) {
+            dispatch({type: SET_ERRORS, payload: err})
+        }
+    }
     const value = {
       state,
       dispatch, 
       register, 
       login,
       logout, 
-      updateUser,
-      googleSignIn
+    //   updateUser,
+      googleSignIn,
+      acceptRequest,
+      rejectRequest,
+      sendRequest
     }
       return (
           <AuthContext.Provider value={value}>
