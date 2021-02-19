@@ -1,6 +1,6 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import authReducer from "./AuthReducer"
-import { LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
+import { ACCEPT_REQUEST, DECLINE_REQUEST, LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
 import axios from "axios"
 const AuthContext = createContext();
 
@@ -75,6 +75,7 @@ export function AuthProvider({children}) {
         //TODO: FINSIH
         try {
             const res = await axios.post("http://localhost:5000/users/"+ id + "/accept")
+            dispatch({type: ACCEPT_REQUEST, payload: id})
             console.log(res.data)
         }
         catch(error) {
@@ -86,6 +87,7 @@ export function AuthProvider({children}) {
         try {
             const res = await axios.post("http://localhost:5000/users/" + id + "/reject")
             console.log(res.data)
+            dispatch({type: DECLINE_REQUEST, payload: id})
         }catch(err) {
             dispatch({type: SET_ERRORS, payload: err})
         }

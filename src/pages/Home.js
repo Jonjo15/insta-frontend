@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Image } from "semantic-ui-react"
+import { Container, Grid } from "semantic-ui-react"
 import {Redirect} from "react-router-dom"
 import { useAuth } from '../context/auth/AuthContext'
 import HomeFeed from '../components/HomeFeed'

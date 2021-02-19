@@ -9,3 +9,5 @@ export const UPDATE_USER="UPDATE_USER"
 export const SET_ERRORS = 'SET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const LOADING_DATA = 'LOADING_DATA';
+export const ACCEPT_REQUEST="ACCEPT_REQUEST";
+export const DECLINE_REQUEST="DECLINE_REQUEST"

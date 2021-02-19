@@ -1,4 +1,4 @@
-import {SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, SET_USER, FINISH_LOADING, LOG_OUT, SET_ERRORS, UPDATE_USER} from "./types"
+import {SET_AUTHENTICATED, SET_UNAUTHENTICATED,ACCEPT_REQUEST, DECLINE_REQUEST, LOADING_USER, SET_USER, FINISH_LOADING, LOG_OUT, SET_ERRORS, UPDATE_USER} from "./types"
 import {initialState} from "./AuthContext"
 export default function authReducer (state, action){
     switch(action.type) {
@@ -7,6 +7,17 @@ export default function authReducer (state, action){
             ...state,
             currentUser: null,
             authenticated: false
+            }
+        case ACCEPT_REQUEST: 
+            //TODO:
+            return {
+                ...state,
+
+            }
+        case DECLINE_REQUEST:
+            //TODO:
+            return {
+                ...state
             }
         case SET_AUTHENTICATED:
             return {
