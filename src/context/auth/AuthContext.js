@@ -40,7 +40,7 @@ export function AuthProvider({children}) {
             // history.push("/home")
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: error})
-            console.error(error)
+            console.log(error)
         }
     }
     // const updateUser = (data) => {
@@ -55,7 +55,7 @@ export function AuthProvider({children}) {
         }
         catch(err) {
             dispatch({type: SET_ERRORS, payload: err})
-            console.error(err)
+            console.log(err)
         }
     }
     const logout = () => {

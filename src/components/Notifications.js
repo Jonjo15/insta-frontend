@@ -32,7 +32,7 @@ const createNotificationText = (type, username) => {
     if (type==="like") {
         return username + " gave you a like."
     }
-    else if (type==="coment") {
+    else if (type==="comment") {
         return username + " commented on your post."
     }
     else if (type==="accept") {
