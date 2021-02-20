@@ -1,6 +1,8 @@
 import {SET_AUTHENTICATED, SET_UNAUTHENTICATED,ACCEPT_REQUEST, DECLINE_REQUEST, LOADING_USER, SET_USER, FINISH_LOADING, LOG_OUT, SET_ERRORS, UPDATE_USER} from "./types"
 import {initialState} from "./AuthContext"
 export default function authReducer (state, action){
+    let accepted;
+    let newFollowRequests;
     switch(action.type) {
         case SET_UNAUTHENTICATED:
             return {
@@ -9,15 +11,20 @@ export default function authReducer (state, action){
             authenticated: false
             }
         case ACCEPT_REQUEST: 
-            //TODO:
+            
+            console.log(action.payload)
+            accepted = state.currentUser.follow_requests.find(u => u._id === action.payload)
+            newFollowRequests = state.currentUser.follow_requests.filter(u => u._id !== action.payload)
             return {
                 ...state,
-
+                currentUser: {...state.currentUser, follow_requests: newFollowRequests, followers: [...state.currentUser.follow_requests, accepted ]}
             }
         case DECLINE_REQUEST:
-            //TODO:
+            console.log(action.payload)
+            newFollowRequests = state.currentUser.follow_requests.filter(u => u._id !== action.payload)
             return {
-                ...state
+                ...state,
+                currentUser: {...state.currentUser, follow_requests: newFollowRequests}
             }
         case SET_AUTHENTICATED:
             return {
