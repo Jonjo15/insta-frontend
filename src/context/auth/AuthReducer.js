@@ -17,7 +17,7 @@ export default function authReducer (state, action){
             newFollowRequests = state.currentUser.follow_requests.filter(u => u._id !== action.payload)
             return {
                 ...state,
-                currentUser: {...state.currentUser, follow_requests: newFollowRequests, followers: [...state.currentUser.follow_requests, accepted ]}
+                currentUser: {...state.currentUser, follow_requests: newFollowRequests, followers: [...state.currentUser.followers, accepted ]}
             }
         case DECLINE_REQUEST:
             console.log(action.payload)

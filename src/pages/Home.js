@@ -11,7 +11,9 @@ export default function Home() {
         authenticated ? (<Container className="mt-50">
             <h1 className="center">Home </h1>
             {currentUser && <p>Hello {currentUser.username} {currentUser._id}</p>}
-            <p>{JSON.stringify(currentUser)}</p>
+            {/* <p>{JSON.stringify(currentUser)}</p> */}
+            <h2>Followers: {JSON.stringify(currentUser.followers) } {currentUser.followers.length}</h2>
+            <h2>Requests: {JSON.stringify(currentUser.follow_requests)} {currentUser.follow_requests.length}</h2>
             <Grid>
                 <Grid.Column width={12}>
                     <HomeFeed />
