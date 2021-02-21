@@ -6,6 +6,7 @@ export default function HomeFeed() {
     return (
         <div className="home-feed-container">
            {feedPosts.length === 0 && <p>There are no posts on your feed yet</p>} 
+           {feedPosts.map(f => <p key={f._id}>{f._id}: {f.poster.username}</p>)}
         </div>
     )
 }

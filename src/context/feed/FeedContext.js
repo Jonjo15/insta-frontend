@@ -1,6 +1,6 @@
-import {  useContext, useReducer, createContext} from "react"
+import {  useContext,useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-// import { LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER, UPDATE_USER} from "./types"
+import { SET_ERRORS, CLEAR_ERRORS, UPDATE_FEED} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -10,6 +10,7 @@ export function useFeed() {
 
 export const initialState = {
     selectedUserPosts: [], 
+    selectedUserInfo: null,
     feedPosts: [],
     error: null
 };
@@ -18,18 +19,16 @@ export function FeedProvider({children}) {
     const [state, dispatch] = useReducer(feedReducer, initialState)
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
 
-    // useEffect(() => {
-        //TODO: FINISH
-        // axios.get("http://localhost:5000/").then(res => {
-        //     console.log(res.data)
-        // }).catch(err => {
-        //     console.error(err)
-        // })
-    // }, [])
-
-    // const updateUser = (data) => {
-    //     dispatch({type: UPDATE_USER, payload: data})
-    // }
+    useEffect(() => {
+        // TODO: FINISH
+        axios.get("http://localhost:5000/").then(res => {
+            console.log(res.data)
+            dispatch({type: UPDATE_FEED, payload: res.data.timeline})
+        }).catch(err => {
+            console.error(err)
+            dispatch({type: SET_ERRORS, payload:{error: "Something went wrong"}})
+        })
+    }, [])
   
     const value = {
       state
