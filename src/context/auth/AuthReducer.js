@@ -1,4 +1,4 @@
-import {SET_AUTHENTICATED, SET_UNAUTHENTICATED,ACCEPT_REQUEST, DECLINE_REQUEST, LOADING_USER, SET_USER, FINISH_LOADING, LOG_OUT, SET_ERRORS, UPDATE_USER} from "./types"
+import {SET_AUTHENTICATED, SET_UNAUTHENTICATED,ACCEPT_REQUEST,CLEAR_ERRORS, DECLINE_REQUEST, LOADING_USER, SET_USER, FINISH_LOADING, LOG_OUT, SET_ERRORS, UPDATE_USER} from "./types"
 import {initialState} from "./AuthContext"
 export default function authReducer (state, action){
     let accepted;
@@ -8,6 +8,7 @@ export default function authReducer (state, action){
             return {
             ...state,
             currentUser: null,
+            error: null,
             authenticated: false
             }
         case ACCEPT_REQUEST: 
@@ -17,6 +18,7 @@ export default function authReducer (state, action){
             newFollowRequests = state.currentUser.follow_requests.filter(u => u._id !== action.payload)
             return {
                 ...state,
+                error: null,
                 currentUser: {...state.currentUser, follow_requests: newFollowRequests, followers: [...state.currentUser.followers, accepted ]}
             }
         case DECLINE_REQUEST:
@@ -24,16 +26,19 @@ export default function authReducer (state, action){
             newFollowRequests = state.currentUser.follow_requests.filter(u => u._id !== action.payload)
             return {
                 ...state,
+                error: null,
                 currentUser: {...state.currentUser, follow_requests: newFollowRequests}
             }
         case SET_AUTHENTICATED:
             return {
               ...state,
+              error: null,
               authenticated: true
             }
         case LOADING_USER:
             return {
                 ...state,
+                error: null,
                 loading: true
             }
         case FINISH_LOADING:
@@ -46,6 +51,7 @@ export default function authReducer (state, action){
             return {
                 ...state,
                 loading: false,
+                error: null,
                 currentUser: action.payload.user,
                 token: action.payload.token || state.token,
                 authenticated: true
@@ -53,6 +59,7 @@ export default function authReducer (state, action){
         case UPDATE_USER: 
             return {
                 ...state,
+                error: null,
                 currentUser: action.payload,
                 loading: false
             }
@@ -60,6 +67,7 @@ export default function authReducer (state, action){
             localStorage.removeItem("token")
             return {
                 ...initialState, 
+                error: null,
                 loading: false
             }
         case SET_ERRORS:
@@ -67,6 +75,11 @@ export default function authReducer (state, action){
                 ...state,
                 error: action.payload.error,
                 loading: false
+            }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
             }
       default:
         return state;

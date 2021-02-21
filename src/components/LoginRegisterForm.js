@@ -4,7 +4,7 @@ import GoogleLogin from 'react-google-login';
 import { useAuth } from '../context/auth/AuthContext';
 // import {useHistory} from "react-router-dom"
 export default function LoginRegisterForm() {
-    const {login, register, googleSignIn, state: {error}} = useAuth()
+    const {login,clearErrors, register, googleSignIn, state: {error}} = useAuth()
     const [isLogin, setIsLogin] = useState(false)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -50,7 +50,10 @@ export default function LoginRegisterForm() {
             />
             <div className="m-auto">
                 <span>{isLogin ? "Don't have an account? Register" : "Alredy have an account? Log In"}</span>
-                <Button onClick={() => setIsLogin(c => !c)} content="Here"/>
+                <Button onClick={() => {
+                    clearErrors()
+                    setIsLogin(c => !c)
+                    }} content="Here"/>
             </div>
             
         </Container>

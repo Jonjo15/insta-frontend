@@ -1,6 +1,6 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import authReducer from "./AuthReducer"
-import { ACCEPT_REQUEST, DECLINE_REQUEST, LOADING_USER, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
+import { ACCEPT_REQUEST, DECLINE_REQUEST, LOADING_USER,CLEAR_ERRORS, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
 import axios from "axios"
 const AuthContext = createContext();
 
@@ -27,19 +27,19 @@ export function AuthProvider({children}) {
             const user = {user: res.data.user[0]}
             dispatch({type: SET_USER, payload: user})
         }).catch(error => {
-            dispatch({type: SET_ERRORS, payload: error})
+            dispatch({type: SET_ERRORS, payload: {error: state.authenticated ? "Failed to get your user data" : null}})
         })
     }, [])
 
     const register = async (data) => {
-        dispatch({type: LOADING_USER})
+        // dispatch({type: LOADING_USER})
         try {
             const res = await axios.post("http://localhost:5000/auth/register", data)
             console.log(res)
             dispatch({type: SET_USER, payload: res.data})
             // history.push("/home")
         } catch (error) {
-            dispatch({type: SET_ERRORS, payload: error})
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to register"}})
             console.log(error)
         }
     }
@@ -47,14 +47,14 @@ export function AuthProvider({children}) {
     //     dispatch({type: UPDATE_USER, payload: data})
     // }
     const login = async (data) => {
-        dispatch({type: LOADING_USER})
+        // dispatch({type: LOADING_USER})
         try {
             const res = await axios.post("http://localhost:5000/auth/login", data)
             dispatch({type: SET_USER, payload: res.data})
             // history.push("/home")
         }
         catch(err) {
-            dispatch({type: SET_ERRORS, payload: err})
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to log in"}})
             console.log(err)
         }
     }
@@ -62,14 +62,17 @@ export function AuthProvider({children}) {
         dispatch({type: LOG_OUT})
     }
     const googleSignIn = async(data) => {
-        dispatch({type: LOADING_USER})
+        // dispatch({type: LOADING_USER})
         try {
             const res = await axios.post("http://localhost:5000/auth/google", data)
             dispatch({type: SET_USER, payload: res.data})
         } catch (error) {
-            dispatch({type: SET_ERRORS, payload: error})
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to sign in with google"}})
             console.error(error)
         }
+    }
+    const clearErrors = () => {
+        dispatch({type: CLEAR_ERRORS})
     }
     const acceptRequest = async(id) => {
         //TODO: FINSIH
@@ -79,7 +82,7 @@ export function AuthProvider({children}) {
             console.log(res.data)
         }
         catch(error) {
-            dispatch({type: SET_ERRORS, payload: error})
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to accept request"}})
         }
     }
     const rejectRequest = async(id) => {
@@ -89,7 +92,7 @@ export function AuthProvider({children}) {
             console.log(res.data)
             dispatch({type: DECLINE_REQUEST, payload: id})
         }catch(err) {
-            dispatch({type: SET_ERRORS, payload: err})
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to reject request"}})
         }
     }
     const sendRequest = async(id) => {
@@ -98,7 +101,7 @@ export function AuthProvider({children}) {
             const res = await axios.post("http://localhost:5000/users/" + id)
             console.log(res.data)
         } catch(err) {
-            dispatch({type: SET_ERRORS, payload: err})
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to send the request"}})
         }
     }
     const value = {
@@ -107,7 +110,7 @@ export function AuthProvider({children}) {
       register, 
       login,
       logout, 
-    //   updateUser,
+      clearErrors,
       googleSignIn,
       acceptRequest,
       rejectRequest,
