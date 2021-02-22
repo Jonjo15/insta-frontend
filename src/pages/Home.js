@@ -15,10 +15,10 @@ export default function Home() {
             <h2>Followers: {JSON.stringify(currentUser.followers) } {currentUser.followers.length}</h2>
             <h2>Requests: {JSON.stringify(currentUser.follow_requests)} {currentUser.follow_requests.length}</h2>
             <Grid>
-                <Grid.Column width={12}>
+                <Grid.Column width={10}>
                     <HomeFeed />
                 </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column width={6}>
                     <Recomendations />
                 </Grid.Column>
             </Grid>
