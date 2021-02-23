@@ -1,6 +1,10 @@
 import React from 'react'
 import {Card, Image, Icon } from "semantic-ui-react"
 import {Link} from "react-router-dom"
+import LikeUnlike from "./LikeUnlike"
+import dayjs from "dayjs"
+var relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
 export default function Post({post}) {
     return (
         <Card fluid>
@@ -21,17 +25,18 @@ export default function Post({post}) {
             <Image src={post.poster.profile_pic_url} wrapped ui={false} />
             <Card.Content>
             <Card.Meta>
-                <span className='date'>{JSON.stringify(post.createdAt)}</span>
+                <span className='date'>{dayjs(post.createdAt).fromNow()}</span>
             </Card.Meta>
             {post.body && <Card.Description>
-                {post.body}
+                <Link className="mr-10" to={"/users/" + post.poster._id}>{post.poster.username}</Link> {post.body}
             </Card.Description>}
             </Card.Content>
             <Card.Content extra>
-            <a>
+                <LikeUnlike post={post}/>
+            {/* <a>
                 <Icon name='user' />
                 22 Friends
-            </a>
+            </a> */}
             </Card.Content>
         </Card>
     )
