@@ -1,6 +1,6 @@
 import {  useContext,useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, CLEAR_ERRORS, UPDATE_FEED} from "./types"
+import { SET_ERRORS, LIKE_UNLIKE_POST, UPDATE_FEED} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -29,9 +29,21 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload:{error: "Something went wrong"}})
         })
     }, [])
-  
+    
+    const likeUnlike = async (id) => {
+        try {
+            const res = await axios.put("http://localhost:5000/posts/"+ id)
+            console.log(res.data)
+            dispatch({type: LIKE_UNLIKE_POST, payload: res.data.updatedPost})
+
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed like/unlike action"}})
+        }
+    }
+
     const value = {
-      state
+      state,
+      likeUnlike
     }
       return (
           <FeedContext.Provider value={value}>
