@@ -43,3 +43,7 @@ button {
 .mr-10 {
   margin-right: 10px;
 }
+.explore-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

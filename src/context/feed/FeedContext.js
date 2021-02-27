@@ -1,6 +1,6 @@
 import {  useContext,useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, LIKE_UNLIKE_POST, UPDATE_FEED} from "./types"
+import { SET_ERRORS, LIKE_UNLIKE_POST, UPDATE_FEED, SET_EXPLORE} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -12,6 +12,8 @@ export const initialState = {
     selectedUserPosts: [], 
     selectedUserInfo: null,
     feedPosts: [],
+    explore: [],
+    loading: true,
     error: null
 };
 
@@ -30,6 +32,16 @@ export function FeedProvider({children}) {
         })
     }, [])
     
+    useEffect(() => {
+        axios.get("http://localhost:5000/explore/0").then(res => {
+            console.log(res.data)
+            dispatch({type: SET_EXPLORE, payload: res.data.users})
+
+        }).catch(err => {
+            console.error(err)
+            dispatch({type: SET_ERRORS, payload: {error: "Something went wrong"}})
+        })
+    }, [])
     const likeUnlike = async (id) => {
         try {
             const res = await axios.put("http://localhost:5000/posts/"+ id)
