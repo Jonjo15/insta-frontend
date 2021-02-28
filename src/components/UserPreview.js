@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState}  from 'react'
 import {Card, Image, Button} from "semantic-ui-react"
 import {useAuth} from "../context/auth/AuthContext"
 import {Link} from "react-router-dom"
@@ -8,10 +8,12 @@ const createMetaText = (followers, userId) => {
     return text
 }
 export default function UserPreview({user}) {
-    const {state: {currentUser: {followers}}} = useAuth()
-
+    const {state: {currentUser: {followers, _id}}} = useAuth()
+    const [sent, setSent] = useState(false)
     const handleClick = e => {
+        e.target.disabled = true;
         console.log("send request")
+        setSent(true)
     }
     return (
         <Card>
@@ -23,13 +25,10 @@ export default function UserPreview({user}) {
                 />
                 <Card.Header><Link to={"/users/" + user._id}>{user.username}</Link></Card.Header>
                 <Card.Meta>{createMetaText(followers, user._id)}</Card.Meta>
-                {/* <Card.Description>
-                Steve wants to add you to the group <strong>best friends</strong>
-                </Card.Description> */}
             </Card.Content>
             <Card.Content extra>
-                <Button onClick={handleClick} basic color='green'>
-                    Send a follow request
+                <Button onClick={handleClick} disabled={user.follow_requests.includes(_id)} basic color='green'>
+                    {user.follow_requests.includes(_id) || sent ? "Sent" : "Send a follow request"}
                 </Button>
             </Card.Content>
         </Card>

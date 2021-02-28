@@ -12,7 +12,8 @@ import {
     DELETE_POST,
     SEND_FOLLOW_REQUEST,
     SET_EXPLORE,
-    ADD_EXPLORE
+    ADD_EXPLORE,
+    SET_RECOMMENDED
      } from "./types";
 
 export default function feedReducer (state, action){
@@ -24,6 +25,11 @@ export default function feedReducer (state, action){
               ...state,
               feedPosts: action.payload,
               loading: false
+            }
+        case SET_RECOMMENDED:
+            return {
+                ...state,
+                recommended: action.payload
             }
         case SET_EXPLORE: 
             //TODO:
