@@ -32,20 +32,39 @@ export default function feedReducer (state, action){
                 recommended: action.payload
             }
         case SET_EXPLORE: 
-            //TODO:
             return {
                 ...state,
-                explore: action.payload
+                skip: state.skip + 25,
+                explore: action.payload,
+                exploreEndFetch: action.payload.length < 25 ? true : false
             }
         case ADD_EXPLORE:
             //TODO:
             return {
-                ...state
+                ...state,
+                explore: [...state.explore, ...action.payload],
+                exploreEndFetch: action.payload.length < 25 ? true : false,
+                skip: state.skip + 25
             }
         case SEND_FOLLOW_REQUEST:
         //TODO:
             return {
-                ...state
+                ...state,
+                explore: state.explore.map(u => {
+                    if (u._id !== action.payload._id) {
+                        return u
+                    } else {
+                        return action.payload
+                    }
+                }),
+                //TODO: TEST
+                recommended: state.recommended.map(u => {
+                    if (u._id !== action.payload._id) {
+                        return u
+                    } else {
+                        return action.payload
+                    }
+                })
             }
         case ADD_POST: 
             //TODO:
@@ -105,7 +124,8 @@ export default function feedReducer (state, action){
         case SET_ERRORS: 
             return {
                 ...state,
-                error: action.payload.error
+                error: action.payload.error,
+                loading: false
             }
         case CLEAR_ERRORS: 
             return {

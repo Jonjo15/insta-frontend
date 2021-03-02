@@ -60,6 +60,7 @@ export function AuthProvider({children}) {
     }
     const logout = () => {
         dispatch({type: LOG_OUT})
+        window.location.reload()
     }
     const googleSignIn = async(data) => {
         // dispatch({type: LOADING_USER})

@@ -1,6 +1,7 @@
 import React, {useState}  from 'react'
 import {Card, Image, Button} from "semantic-ui-react"
 import {useAuth} from "../context/auth/AuthContext"
+import {useFeed} from "../context/feed/FeedContext"
 import {Link} from "react-router-dom"
 const createMetaText = (followers, userId) => {
     let ids = followers.map(f => f._id)
@@ -9,11 +10,12 @@ const createMetaText = (followers, userId) => {
 }
 export default function UserPreview({user}) {
     const {state: {currentUser: {followers, _id}}} = useAuth()
+    const {sendRequest} = useFeed()
     const [sent, setSent] = useState(false)
     const handleClick = e => {
         e.target.disabled = true;
-        console.log("send request")
         setSent(true)
+        sendRequest(user._id)
     }
     return (
         <Card>
