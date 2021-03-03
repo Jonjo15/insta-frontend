@@ -24,7 +24,7 @@ export default function Post({post}) {
                 </Card>
             </Card.Header>
             {/* TODO: CHANGE BELOW TO INCLUDE POST PICTURE INSTEAD OF PROFILE PICTURE FOR TESTING */}
-            <Image src={post.poster.profile_pic_url} wrapped ui={false} onClick={e => setOpen(true)}/>
+            <Image style={{cursor: "pointer"}} src={post.poster.profile_pic_url} wrapped ui={false} onClick={e => setOpen(true)}/>
             <Card.Content>
                 <Card.Meta>
                     <span className='date'>{dayjs(post.createdAt).fromNow()}</span>
@@ -36,7 +36,7 @@ export default function Post({post}) {
             <Card.Content extra>
                 <LikeUnlike post={post}/>
                 <Modal post={post} open={open} setOpen={setOpen}/>
-            {post.comments.length === 0 && <Card.Description>No comments yet</Card.Description>}
+            {post.comments.length === 0 && <Card.Description className="py-2">No comments yet</Card.Description>}
             {post.comments.length > 0 && <Card.Description>{post.comments[post.comments.length - 1].commenter.username}</Card.Description>}
             </Card.Content>
         </Card>
