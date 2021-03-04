@@ -11,6 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.w-100 {
+  width: 100%;
+}
 button {
   margin-left: 5px;
 }
@@ -59,4 +62,30 @@ button {
 .modal-right {
   display: flex;
   flex-direction: column;
+}
+.comment-card {
+  padding: 10px;
+}
+.comment-card a {
+  font-size: 1.2 rem;
+  margin-right: 5px;
+  font-weight: bolder;
+}
+.modal-post-form {
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+}
+.comment-form {
+  display: flex;
+}
+.comment-form input {
+  border: none;
+  flex-basis: 85%;
+}
+.comment-form input:focus {
+  border: none;
+}
+.comment-form button {
+  flex-basis: auto;
 }
