@@ -47,9 +47,11 @@ export default function PostModal({post, open, setOpen}) {
                             </div> )}
                             {post.comments.length === 0 && <p className="center">No comments yet</p>}
                         </div>
+                        
                         <div className="modal-post-form">
-                            <div className="w-100">
-
+                            <div className="w-100 p-10">ICONS</div>
+                            <div className="w-100 p-10">
+                                <small>{dayjs(post.createdAt).fromNow()}</small>
                                 <form className="comment-form" onSubmit={handleSubmit}>
                                     <input placeholder="Post a comment" type="text" onChange={(e) => setBody(e.target.value)} value={body}/>
                                     <Button type="submit" content="Submit"/>

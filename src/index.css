@@ -53,6 +53,9 @@ button {
 .py-2 {
   padding: 5px 0px;
 }
+.p-10 {
+  padding: 10px;
+}
 .modal-grid {
   display: grid;
   grid-template-columns: 3fr 2fr;
@@ -73,11 +76,14 @@ button {
 }
 .modal-post-form {
   display: flex;
+  flex-direction: column;
   height: 100%;
-  align-items: flex-end;
+  justify-content: flex-end;
 }
 .comment-form {
   display: flex;
+  margin-top: 10px;
+  padding-right: 0px;
 }
 .comment-form input {
   border: none;
