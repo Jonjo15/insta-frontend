@@ -1,6 +1,6 @@
-import {  useContext,useEffect, useReducer, createContext} from "react"
+import {  useContext, useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, LIKE_UNLIKE_POST, UPDATE_FEED, SET_EXPLORE, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
+import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT, UPDATE_FEED, SET_EXPLORE, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -81,11 +81,21 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to load more"}})
         }
     }
+    const addComment = async (post, currentUser, body) => {
+        try {
+            const res = await axios.post("http://localhost:5000/posts/"+ post._id, {body})
+            console.log(res.data)
+            dispatch({type: ADD_COMMENT, payload: {post, currentUser, updatedPost: res.data.updatedPost, comment: res.data.comment}})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Post the comment"}})
+        }
+    }
     const value = {
       state,
       likeUnlike,
       sendRequest,
-      exploreMore
+      exploreMore,
+      addComment
     }
       return (
           <FeedContext.Provider value={value}>

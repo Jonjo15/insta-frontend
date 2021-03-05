@@ -77,7 +77,8 @@ button {
 .modal-post-form {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: min-content;
+  margin-top: 15px;
   justify-content: flex-end;
 }
 .comment-form {
@@ -94,4 +95,12 @@ button {
 }
 .comment-form button {
   flex-basis: auto;
+}
+.comments {
+  overflow-y: scroll;
+  max-height: 40vh;
+}
+.bolder a{
+  font-size: 1.1rem;
+  font-weight: bolder;
 }

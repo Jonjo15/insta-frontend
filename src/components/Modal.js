@@ -2,16 +2,23 @@ import React, { useState } from 'react'
 import { Modal, Image, Card, Button } from "semantic-ui-react"
 import {Link} from "react-router-dom"
 import dayjs from "dayjs"
-
+import LikeUnlike from "./LikeUnlike"
+import {useFeed} from "../context/feed/FeedContext"
+import {useAuth} from "../context/auth/AuthContext"
 var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 export default function PostModal({post, open, setOpen}) {
     // const [open, setOpen] = useState(false)
+    const {addComment} = useFeed()
+    const {state: {currentUser}} = useAuth()
     const [body, setBody] = useState("")
     const handleSubmit = e => {
         e.preventDefault()
+        addComment(post, currentUser, body)
+        setBody("")
         console.log("submit")
     }
+    
     return (
             <Modal
             onClose={() => setOpen(false)}
@@ -39,17 +46,20 @@ export default function PostModal({post, open, setOpen}) {
                         </Card>
                         {/* TODO: REPLACE BELOW WITH CUSTOM HTML THIS IS GARBAGE */}
                         <div className="comments">
-                            <div className="comment-card">
+                            <div className="comment-card bolder">
                                 <p><Link to={"/users/" + post.poster._id}>{post.poster.username}</Link> {post.body}</p>
                             </div>
-                            {post.comments.map(c => <div className="comment-card">
+                           <hr/> 
+                            {post.comments.map(c => <div key={c._id} className="comment-card">
                                 <p><Link to={"/users/" + c.commenter._id}>{c.commenter.username}</Link> {c.body}</p>
                             </div> )}
                             {post.comments.length === 0 && <p className="center">No comments yet</p>}
                         </div>
                         
                         <div className="modal-post-form">
-                            <div className="w-100 p-10">ICONS</div>
+                            <div className="w-100 p-10">
+                                <LikeUnlike post={post}/>
+                            </div>
                             <div className="w-100 p-10">
                                 <small>{dayjs(post.createdAt).fromNow()}</small>
                                 <form className="comment-form" onSubmit={handleSubmit}>

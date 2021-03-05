@@ -74,7 +74,18 @@ export default function feedReducer (state, action){
         case ADD_COMMENT: 
             //TODO:
             return {
-                ...state
+                ...state,
+                feedPosts: state.feedPosts.map(p => {
+                    if (p._id !== action.payload.post._id) {
+                        return p
+                    } else {
+                        return {...action.payload.updatedPost, poster: p.poster, comments: [...p.comments, {...action.payload.comment, commenter: {
+                            username: action.payload.currentUser.username,
+                            _id: action.payload.currentUser._id,
+                            profile_pic_url: action.payload.currentUser.profile_pic_url
+                        }}]}
+                    }
+                })
             }
         case DELETE_POST:
             //TODO: 
