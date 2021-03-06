@@ -81,6 +81,17 @@ export default function feedReducer (state, action){
                             profile_pic_url: action.payload.currentUser.profile_pic_url
                         }}]}
                     }
+                }),
+                selectedUserPosts: state.selectedUserPosts.map(p => {
+                    if (p._id !== action.payload.post._id) {
+                        return p
+                    } else {
+                        return {...action.payload.updatedPost, poster: p.poster, comments: [...p.comments, {...action.payload.comment, commenter: {
+                            username: action.payload.currentUser.username,
+                            _id: action.payload.currentUser._id,
+                            profile_pic_url: action.payload.currentUser.profile_pic_url
+                        }}]}
+                    }
                 })
             }
         case DELETE_POST:
@@ -101,7 +112,7 @@ export default function feedReducer (state, action){
             // }
             }
         case DELETE_COMMENT: 
-        //TODO:
+        //TODO: ADD FOR SELECTED USER POSTS
         return {
             ...state,
             feedPosts: state.feedPosts.map(p => {
@@ -114,12 +125,50 @@ export default function feedReducer (state, action){
                         comments: p.comments.filter(c => c._id !== action.payload.commentId)
                     }
                 }
+            }),
+            selectedUserPosts: state.selectedUserPosts.map(p => {
+                if(p._id !== action.payload.postId) {
+                    return p
+                }
+                else {
+                    return {
+                        ...p,
+                        comments: p.comments.filter(c => c._id !== action.payload.commentId)
+                    }
+                }
             })
         }
         case LIKE_UNLIKE_COMMENT: 
-        //TODO:
             return {
-                ...state
+                ...state,
+                feedPosts: state.feedPosts.map(p => {
+                    if (p._id !== action.payload.postId) {
+                        return p
+                    } 
+                    else {
+                        return {...p, comments: p.comments.map(c => {
+                            if (c._id !== action.payload.updatedComment._id) {
+                                return c
+                            } else {
+                                return {...action.payload.updatedComment, commenter: c.commenter}
+                            }
+                        })}
+                    }
+                }),
+                selectedUserPosts: state.selectedUserPosts.map(p => {
+                    if (p._id !== action.payload.postId) {
+                        return p
+                    } 
+                    else {
+                        return {...p, comments: p.comments.map(c => {
+                            if (c._id !== action.payload.updatedComment._id) {
+                                return c
+                            } else {
+                                return {...action.payload.updatedComment, commenter: c.commenter}
+                            }
+                        })}
+                    }
+                })
             }
         case LIKE_UNLIKE_POST: 
             feedCopy = state.feedPosts;
