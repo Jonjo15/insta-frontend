@@ -7,9 +7,9 @@ export default function CommentLikeUnlike({comment}) {
         console.log("like")
     }
     return (
-         <>
-            <Icon style={{cursor: "pointer"}} onClick={handleLike} color={comment.likes.includes(currentUser._id) ? "red" : "grey"} size="tiny" name='like' />
-            {comment.likes.length === 1 ? "1 like" : comment.likes.length.toString() + " likes"}
-        </>
+         <div className="comment-like-unlike">
+            <Icon style={{cursor: "pointer"}} onClick={handleLike} color={comment.likes.includes(currentUser._id) ? "red" : "grey"} size="small" name='like' />
+            {comment.likes.length === 1 ? <small>"1 like"</small> : <small>{comment.likes.length.toString() + " likes"}</small> }
+        </div>
     )
 }

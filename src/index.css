@@ -67,7 +67,7 @@ button {
   flex-direction: column;
 }
 .comment-card {
-  padding: 10px;
+  padding: 10px 0px 0px 10px;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -108,4 +108,8 @@ button {
 .bolder a {
   font-size: 1.1rem;
   font-weight: bolder;
+}
+
+.comment-like-unlike {
+  padding: 0px 10px;
 }
