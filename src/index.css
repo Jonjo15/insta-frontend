@@ -68,7 +68,11 @@ button {
 }
 .comment-card {
   padding: 10px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
+
 .comment-card a {
   font-size: 1.2 rem;
   margin-right: 5px;
@@ -99,8 +103,9 @@ button {
 .comments {
   overflow-y: scroll;
   max-height: 40vh;
+  min-height: 40vh;
 }
-.bolder a{
+.bolder a {
   font-size: 1.1rem;
   font-weight: bolder;
 }

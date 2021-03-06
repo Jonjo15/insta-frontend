@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Modal, Image, Card, Button } from "semantic-ui-react"
+import { Modal, Image, Card, Button, Icon } from "semantic-ui-react"
 import {Link} from "react-router-dom"
 import dayjs from "dayjs"
 import LikeUnlike from "./LikeUnlike"
@@ -9,7 +9,7 @@ var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 export default function PostModal({post, open, setOpen}) {
     // const [open, setOpen] = useState(false)
-    const {addComment} = useFeed()
+    const {addComment, deleteComment} = useFeed()
     const {state: {currentUser}} = useAuth()
     const [body, setBody] = useState("")
     const handleSubmit = e => {
@@ -18,7 +18,10 @@ export default function PostModal({post, open, setOpen}) {
         setBody("")
         console.log("submit")
     }
-    
+    const handleDeleteComment = id => {
+        console.log(id)
+        deleteComment(id, post._id)
+    }
     return (
             <Modal
             onClose={() => setOpen(false)}
@@ -44,7 +47,6 @@ export default function PostModal({post, open, setOpen}) {
                                 <Card.Header style={{marginTop: 5, marginLeft: 5}}><Link to={"/users/" + post.poster._id}>{post.poster.username}</Link></Card.Header>
                             </Card.Content>
                         </Card>
-                        {/* TODO: REPLACE BELOW WITH CUSTOM HTML THIS IS GARBAGE */}
                         <div className="comments">
                             <div className="comment-card bolder">
                                 <p><Link to={"/users/" + post.poster._id}>{post.poster.username}</Link> {post.body}</p>
@@ -52,6 +54,7 @@ export default function PostModal({post, open, setOpen}) {
                            <hr/> 
                             {post.comments.map(c => <div key={c._id} className="comment-card">
                                 <p><Link to={"/users/" + c.commenter._id}>{c.commenter.username}</Link> {c.body}</p>
+                                {c.commenter._id === currentUser._id && <Icon onClick={(e) => handleDeleteComment(c._id)} name="delete" style={{cursor: "pointer", justifySelf: "flex-end"}}/>}
                             </div> )}
                             {post.comments.length === 0 && <p className="center">No comments yet</p>}
                         </div>

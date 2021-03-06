@@ -39,7 +39,6 @@ export default function feedReducer (state, action){
                 exploreEndFetch: action.payload.length < 25 ? true : false
             }
         case ADD_EXPLORE:
-            //TODO:
             return {
                 ...state,
                 explore: [...state.explore, ...action.payload],
@@ -47,7 +46,6 @@ export default function feedReducer (state, action){
                 skip: state.skip + 25
             }
         case SEND_FOLLOW_REQUEST:
-        //TODO:
             return {
                 ...state,
                 explore: state.explore.map(u => {
@@ -57,7 +55,6 @@ export default function feedReducer (state, action){
                         return action.payload
                     }
                 }),
-                //TODO: TEST
                 recommended: state.recommended.map(u => {
                     if (u._id !== action.payload._id) {
                         return u
@@ -72,7 +69,6 @@ export default function feedReducer (state, action){
                 ...state
             }
         case ADD_COMMENT: 
-            //TODO:
             return {
                 ...state,
                 feedPosts: state.feedPosts.map(p => {
@@ -90,13 +86,36 @@ export default function feedReducer (state, action){
         case DELETE_POST:
             //TODO: 
             return {
-                ...state
+                ...state,
+            //     feedPosts: state.feedPosts.map(p => {
+            //         if(p._id !== action.payload.postId) {
+            //             return p
+            //         }
+            //         else {
+            //             return {
+            //                 ...p,
+            //                 comments: p.comments.filter(c => c._id !== action.payload.commentId)
+            //             }
+            //         }
+            //     })
+            // }
             }
         case DELETE_COMMENT: 
         //TODO:
-            return {
-                ...state
-            } 
+        return {
+            ...state,
+            feedPosts: state.feedPosts.map(p => {
+                if(p._id !== action.payload.postId) {
+                    return p
+                }
+                else {
+                    return {
+                        ...p,
+                        comments: p.comments.filter(c => c._id !== action.payload.commentId)
+                    }
+                }
+            })
+        }
         case LIKE_UNLIKE_COMMENT: 
         //TODO:
             return {

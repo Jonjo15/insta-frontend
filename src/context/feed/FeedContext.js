@@ -1,6 +1,6 @@
 import {  useContext, useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT, UPDATE_FEED, SET_EXPLORE, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
+import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT, UPDATE_FEED, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -84,10 +84,18 @@ export function FeedProvider({children}) {
     const addComment = async (post, currentUser, body) => {
         try {
             const res = await axios.post("http://localhost:5000/posts/"+ post._id, {body})
-            console.log(res.data)
             dispatch({type: ADD_COMMENT, payload: {post, currentUser, updatedPost: res.data.updatedPost, comment: res.data.comment}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Post the comment"}})
+        }
+    }
+    const deleteComment = async (id, postId) => {
+        try {
+            const res = await axios.delete("http://localhost:5000/comments/" + id)
+            console.log(res.data)
+            dispatch({type: DELETE_COMMENT, payload: {commentId: id, postId}})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to delete comment"}})
         }
     }
     const value = {
@@ -95,7 +103,8 @@ export function FeedProvider({children}) {
       likeUnlike,
       sendRequest,
       exploreMore,
-      addComment
+      addComment,
+      deleteComment
     }
       return (
           <FeedContext.Provider value={value}>
