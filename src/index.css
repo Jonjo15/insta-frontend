@@ -114,3 +114,7 @@ button {
   padding: 0px 10px;
   height: min-content;
 }
+.post-like-unlike {
+  display: flex;
+  justify-content: space-between;
+}

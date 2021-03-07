@@ -95,24 +95,13 @@ export default function feedReducer (state, action){
                 })
             }
         case DELETE_POST:
-            //TODO: 
+            //TODO: TEST THIS OUT
             return {
                 ...state,
-            //     feedPosts: state.feedPosts.map(p => {
-            //         if(p._id !== action.payload.postId) {
-            //             return p
-            //         }
-            //         else {
-            //             return {
-            //                 ...p,
-            //                 comments: p.comments.filter(c => c._id !== action.payload.commentId)
-            //             }
-            //         }
-            //     })
-            // }
+                feedPosts: state.feedPosts.filter(p => p._id !== action.payload),
+                selectedUserPosts: state.selectedUserPosts.filter(p => p._id !== action.payload)
             }
         case DELETE_COMMENT: 
-        //TODO: ADD FOR SELECTED USER POSTS
         return {
             ...state,
             feedPosts: state.feedPosts.map(p => {

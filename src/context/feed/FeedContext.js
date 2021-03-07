@@ -1,6 +1,6 @@
 import {  useContext, useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
+import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT,DELETE_POST, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -106,6 +106,15 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to like/unlike comment"}})
         }
     }
+    const deletePost = async (id) => {
+        try {
+            const res = await axios.delete("http://localhost:5000/posts/" + id)
+            console.log(res.data)
+            dispatch({type: DELETE_POST, payload: id})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
+        }
+    }
     const value = {
       state,
       likeUnlike,
@@ -113,7 +122,8 @@ export function FeedProvider({children}) {
       exploreMore,
       addComment,
       deleteComment,
-      likeUnlikeComment
+      likeUnlikeComment,
+      deletePost
     }
       return (
           <FeedContext.Provider value={value}>
