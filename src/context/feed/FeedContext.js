@@ -115,6 +115,15 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
         }
     }
+    const setUserProfile = async (id, skip) => {
+        try {
+            const res = await axios.get("http://localhost:5000/users/"+ id + "/" + skip)
+            console.log(res.data)
+            // TODO: FINISH
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
+        }
+    }
     const value = {
       state,
       likeUnlike,
