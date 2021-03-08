@@ -118,3 +118,9 @@ button {
   display: flex;
   justify-content: space-between;
 }
+.profile-grid {
+  max-width: 1080px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 30px;
+}

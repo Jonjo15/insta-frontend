@@ -95,7 +95,6 @@ export default function feedReducer (state, action){
                 })
             }
         case DELETE_POST:
-            //TODO: TEST THIS OUT
             return {
                 ...state,
                 feedPosts: state.feedPosts.filter(p => p._id !== action.payload),
@@ -187,7 +186,8 @@ export default function feedReducer (state, action){
         case SET_SELECTED_USER:
             return {
                 ...state,
-                //TODO:
+                selectedUserInfo: action.payload.user,
+                selectedUserPosts: action.payload.posts
             }
         case SET_ERRORS: 
             return {

@@ -1,6 +1,6 @@
 import {  useContext, useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT,DELETE_POST, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
+import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT,DELETE_POST,SET_SELECTED_USER, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -115,11 +115,20 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
         }
     }
-    const setUserProfile = async (id, skip) => {
+    const setUserProfile = async (id) => {
+        try {
+            const res = await axios.get("http://localhost:5000/users/"+ id + "/0")
+            console.log(res.data)
+            dispatch({type: SET_SELECTED_USER, payload: res.data})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
+        }
+    }
+    const loadMoreProfilePosts = async (id, skip) => {
         try {
             const res = await axios.get("http://localhost:5000/users/"+ id + "/" + skip)
-            console.log(res.data)
-            // TODO: FINISH
+            console.lg(res.data)
+            //TODO: FINISH
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
         }
@@ -132,7 +141,9 @@ export function FeedProvider({children}) {
       addComment,
       deleteComment,
       likeUnlikeComment,
-      deletePost
+      deletePost, 
+      setUserProfile,
+      loadMoreProfilePosts
     }
       return (
           <FeedContext.Provider value={value}>
