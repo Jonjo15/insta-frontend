@@ -9,22 +9,23 @@ export default function Profile() {
     const [skip, setSkip] = useState(9)
     const params = useParams()
     const {state: {currentUser}} = useAuth()
-    const {setUserProfile, state: {selectedUserInfo, selectedUserPosts, loadMoreProfilePosts}} = useFeed()
+    const {setUserProfile,loadMoreProfilePosts, resetProfile, state: {selectedUserInfo, selectedUserPosts, postCount}} = useFeed()
     useEffect(() => {
         document.title = params.userId === currentUser._id ? "You" : "Profile"
         setUserProfile(params.userId)
         
         // TODO: SEND REQUEST TO BACKEND WITH FEED CONTEXT
         // TODO: RESET USER INFO ON UNMOUNTING
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        return () => resetProfile()
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params.userId])
     const loadMore = e => {
         loadMoreProfilePosts(skip)
         setSkip(s => s + 9)
     }
     return (
         <Container className="mt-50">
-            <ProfileHeader user={selectedUserInfo}/>
+            {selectedUserInfo && <ProfileHeader user={selectedUserInfo} postCount={postCount}/>}
             <ProfilePosts posts={selectedUserPosts}/>
             <Button content="Load more images" onClick={() => loadMore()}/>
         </Container>

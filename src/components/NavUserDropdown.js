@@ -3,7 +3,7 @@ import {Dropdown, Button} from "semantic-ui-react"
 import {Link} from "react-router-dom"
 import { useAuth } from '../context/auth/AuthContext'
 export default function NavUserDropdown() {
-    const {logout} = useAuth()
+    const {logout, state: {currentUser: {_id}}} = useAuth()
     const handleLogout = e => {
         console.log("logging out")
         logout()
@@ -11,7 +11,7 @@ export default function NavUserDropdown() {
     return (
         <Dropdown icon="user">
                     <Dropdown.Menu>
-                        <Dropdown.Item icon="user" text="Profile" as={Link} to="/profile"/>
+                        <Dropdown.Item icon="user" text="Profile" as={Link} to={"/users/" + _id}/>
                         <Dropdown.Item icon="sign-out" text="Logout" as={Button} onClick={handleLogout}/>
                     </Dropdown.Menu>
                 </Dropdown>

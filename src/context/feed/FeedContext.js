@@ -1,6 +1,6 @@
 import {  useContext, useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT,DELETE_POST,SET_SELECTED_USER, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
+import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT,DELETE_POST,RESET_USER_PROFILE ,SET_SELECTED_USER, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -127,11 +127,14 @@ export function FeedProvider({children}) {
     const loadMoreProfilePosts = async (id, skip) => {
         try {
             const res = await axios.get("http://localhost:5000/users/"+ id + "/" + skip)
-            console.lg(res.data)
+            console.log(res.data)
             //TODO: FINISH
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
         }
+    }
+    const resetProfile = () => {
+        dispatch({type: RESET_USER_PROFILE})
     }
     const value = {
       state,
@@ -143,7 +146,8 @@ export function FeedProvider({children}) {
       likeUnlikeComment,
       deletePost, 
       setUserProfile,
-      loadMoreProfilePosts
+      loadMoreProfilePosts,
+      resetProfile
     }
       return (
           <FeedContext.Provider value={value}>

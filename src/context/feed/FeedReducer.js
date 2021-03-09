@@ -13,13 +13,21 @@ import {
     SEND_FOLLOW_REQUEST,
     SET_EXPLORE,
     ADD_EXPLORE,
-    SET_RECOMMENDED
+    SET_RECOMMENDED,
+    RESET_USER_PROFILE
      } from "./types";
 
 export default function feedReducer (state, action){
     let feedCopy;
     let newFeed;
     switch(action.type) {
+        case RESET_USER_PROFILE: 
+            return {
+                ...state,
+                selectedUserPosts: [],
+                selectedUserInfo: null,
+                postCount: 0,
+            }
         case UPDATE_FEED: 
             return {
               ...state,
@@ -187,7 +195,8 @@ export default function feedReducer (state, action){
             return {
                 ...state,
                 selectedUserInfo: action.payload.user,
-                selectedUserPosts: action.payload.posts
+                selectedUserPosts: action.payload.posts,
+                postCount: action.payload.postCount
             }
         case SET_ERRORS: 
             return {
