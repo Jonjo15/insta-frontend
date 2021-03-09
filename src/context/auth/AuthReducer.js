@@ -12,8 +12,6 @@ export default function authReducer (state, action){
             authenticated: false
             }
         case ACCEPT_REQUEST: 
-            
-            console.log(action.payload)
             accepted = state.currentUser.follow_requests.find(u => u._id === action.payload)
             newFollowRequests = state.currentUser.follow_requests.filter(u => u._id !== action.payload)
             return {

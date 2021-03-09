@@ -16,13 +16,25 @@ import {
     SET_RECOMMENDED,
     RESET_USER_PROFILE,
     SET_SINGLE_POST,
-    RESET_SINGLE_POST
+    RESET_SINGLE_POST,
+    UPDATE_PROFILE_PIC,
+    UPDATE_BIO
      } from "./types";
 
 export default function feedReducer (state, action){
     let feedCopy;
     let newFeed;
     switch(action.type) {
+        case UPDATE_PROFILE_PIC: 
+            return {
+                ...state,
+                selectedUserInfo: {...state.selectedUserInfo, profile_pic_url: action.payload}
+            }
+        case UPDATE_BIO: 
+            return {
+                ...state,
+                selectedUserInfo: {...state.selectedUserInfo, bio: action.payload}
+            }
         case SET_SINGLE_POST:
             // TODO: FINSIH
             return {

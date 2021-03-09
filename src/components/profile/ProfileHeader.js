@@ -2,9 +2,10 @@ import React from 'react'
 import { useAuth } from '../../context/auth/AuthContext'
 import {Image, Button, Icon} from "semantic-ui-react"
 import {Link} from "react-router-dom"
+import BioUpdateForm from './BioUpdate'
 
 export default function ProfileHeader({user, postCount}) {
-    const {state: {currentUser}} = useAuth()
+    const { state: {currentUser}} = useAuth()
     const buttonContent = (user) => {
         if(user.follow_requests.includes(currentUser._id)) return "Cancel Request"
         if(user.followers.includes(currentUser._id)) return "Unfollow"
@@ -17,9 +18,6 @@ export default function ProfileHeader({user, postCount}) {
     const handleImageChange = e => {
         console.log("hey")
         document.getElementById("profile-pic-input").click()
-    }
-    const handleBio = e => {
-        console.log("hey")
     }
     return (
         <div className="container profile-header">
@@ -37,7 +35,7 @@ export default function ProfileHeader({user, postCount}) {
                 <span className="count">{user.following.length === 1 ? user.following.length + " following" : user.following.length + " following"}</span>
                 <p className="bio">{user.bio}</p>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                {currentUser._id === user._id && <a style={{cursor: "pointer"}} onClick={handleBio}>Update Bio</a>}
+                {currentUser._id === user._id && <BioUpdateForm />}
             </div>
             <input id="profile-pic-input" type="file" hidden />
         </div>

@@ -1,6 +1,6 @@
 import {  useContext, useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT,DELETE_POST,RESET_USER_PROFILE ,SET_SELECTED_USER, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
+import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT,UPDATE_BIO, DELETE_POST,RESET_USER_PROFILE ,SET_SELECTED_USER, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
 import axios from "axios"
 const FeedContext = createContext();
 
@@ -134,6 +134,23 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
         }
     }
+    const updateBio = async(bio) => {
+        try {
+            const res = await axios.put("http://localhost:5000/users/bio", {bio})
+            console.log(res.data)
+            dispatch({type: UPDATE_BIO, payload: bio})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to update bio"}})    
+        }
+    }
+    const updateImage = async () => {
+        try {
+            // TODO:
+            await axios.put("http://localhost:5000/users/profile_pic")
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to update the image"}})    
+        }
+    }
     const resetProfile = () => {
         dispatch({type: RESET_USER_PROFILE})
     }
@@ -157,7 +174,10 @@ export function FeedProvider({children}) {
       loadMoreProfilePosts,
       resetProfile,
       setSinglePost, 
-      resetSinglePost
+      resetSinglePost,
+      updateBio,
+      updateImage,
+
     }
       return (
           <FeedContext.Provider value={value}>

@@ -1,6 +1,6 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import authReducer from "./AuthReducer"
-import { ACCEPT_REQUEST, DECLINE_REQUEST, LOADING_USER,CLEAR_ERRORS, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
+import { ACCEPT_REQUEST, DECLINE_REQUEST,UPDATE_PROFILE_PIC, UPDATE_BIO,CLEAR_ERRORS, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
 import axios from "axios"
 const AuthContext = createContext();
 
@@ -76,11 +76,9 @@ export function AuthProvider({children}) {
         dispatch({type: CLEAR_ERRORS})
     }
     const acceptRequest = async(id) => {
-        //TODO: FINSIH
         try {
-            const res = await axios.post("http://localhost:5000/users/"+ id + "/accept")
+            await axios.post("http://localhost:5000/users/"+ id + "/accept")
             dispatch({type: ACCEPT_REQUEST, payload: id})
-            console.log(res.data)
         }
         catch(error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to accept request"}})
@@ -105,6 +103,29 @@ export function AuthProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to send the request"}})
         }
     }
+
+    const unfollow = async(id) => {
+        // TODO:
+    }
+
+    const updateBio = async(bio) => {
+        try {
+            const res = await axios.put("http://localhost:5000/users/bio", {bio})
+            console.log(res.data)
+            dispatch({type: UPDATE_BIO, payload: bio})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to update bio"}})    
+        }
+    }
+
+    const updateImage = async () => {
+        try {
+            // TODO:
+            await axios.put("http://localhost:5000/users/profile_pic")
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to update the image"}})    
+        }
+    }
     const value = {
       state,
       dispatch, 
@@ -115,7 +136,10 @@ export function AuthProvider({children}) {
       googleSignIn,
       acceptRequest,
       rejectRequest,
-      sendRequest
+      sendRequest,
+      updateBio,
+      updateImage,
+      unfollow
     }
       return (
           <AuthContext.Provider value={value}>
