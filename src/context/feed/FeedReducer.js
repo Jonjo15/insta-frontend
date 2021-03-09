@@ -14,13 +14,25 @@ import {
     SET_EXPLORE,
     ADD_EXPLORE,
     SET_RECOMMENDED,
-    RESET_USER_PROFILE
+    RESET_USER_PROFILE,
+    SET_SINGLE_POST,
+    RESET_SINGLE_POST
      } from "./types";
 
 export default function feedReducer (state, action){
     let feedCopy;
     let newFeed;
     switch(action.type) {
+        case SET_SINGLE_POST:
+            // TODO: FINSIH
+            return {
+                ...state
+            }
+        case RESET_SINGLE_POST: 
+        // TODO: FINSIH
+            return {
+                ...state
+            }
         case RESET_USER_PROFILE: 
             return {
                 ...state,

@@ -1,10 +1,13 @@
 import React from 'react'
 import PostPreview from "./PostPreview"
-export default function ProfilePosts({posts}) {
+import {useAuth} from "../../context/auth/AuthContext"
+export default function ProfilePosts({posts, userId}) {
+    const {state: {currentUser: {following}}} = useAuth()
     return (
-        <div className="profile-grid">
+        following.includes(userId) ? (<div className="profile-grid">
             {posts.length === 0 && <p>No posts yet</p>}
             {posts.map(p => <PostPreview key={p._id} post={p}/>)}
-        </div>
+        </div>) : (<p>You need to follow this user to see their posts</p>)
+        
     )
 }

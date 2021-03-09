@@ -13,9 +13,7 @@ export default function Profile() {
     useEffect(() => {
         document.title = params.userId === currentUser._id ? "You" : "Profile"
         setUserProfile(params.userId)
-        
-        // TODO: SEND REQUEST TO BACKEND WITH FEED CONTEXT
-        // TODO: RESET USER INFO ON UNMOUNTING
+
         return () => resetProfile()
             // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.userId])
@@ -26,8 +24,8 @@ export default function Profile() {
     return (
         <Container className="mt-50">
             {selectedUserInfo && <ProfileHeader user={selectedUserInfo} postCount={postCount}/>}
-            <ProfilePosts posts={selectedUserPosts}/>
-            <Button content="Load more images" onClick={() => loadMore()}/>
+            <ProfilePosts posts={selectedUserPosts} userId={selectedUserInfo?._id}/>
+            {selectedUserInfo && currentUser.following.includes(selectedUserInfo?._id) && <Button content="Load more images" onClick={() => loadMore()}/>}
         </Container>
     )
 }

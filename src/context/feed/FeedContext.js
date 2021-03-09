@@ -11,6 +11,7 @@ export function useFeed() {
 export const initialState = {
     selectedUserPosts: [], 
     selectedUserInfo: null,
+    singlePost: null,
     feedPosts: [],
     explore: [],
     skip: 0,
@@ -136,6 +137,13 @@ export function FeedProvider({children}) {
     const resetProfile = () => {
         dispatch({type: RESET_USER_PROFILE})
     }
+    const setSinglePost = () => {
+        // TODO: FINISH
+    }
+
+    const resetSinglePost = () => {
+        // TODO: FINISH
+    }
     const value = {
       state,
       likeUnlike,
@@ -147,7 +155,9 @@ export function FeedProvider({children}) {
       deletePost, 
       setUserProfile,
       loadMoreProfilePosts,
-      resetProfile
+      resetProfile,
+      setSinglePost, 
+      resetSinglePost
     }
       return (
           <FeedContext.Provider value={value}>
