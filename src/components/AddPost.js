@@ -51,7 +51,12 @@ export default function AddPost() {
         <Modal
             size="large"
             open={open}
-            onClose={() => dispatch({ type: 'close' })}
+            onClose={() => {
+              dispatch({ type: 'close' })
+              setBody("")
+              setFile("")
+              setFileName("")
+            }}
         >
         <Modal.Header>Create a new post</Modal.Header>
         <Modal.Content>
@@ -59,7 +64,7 @@ export default function AddPost() {
                     <Form.Field>
                     <label>Select an image for your new post</label>
                     <input type="file" onChange={handleChange} value={fileName} placeholder='New Img' />
-                    <input type="text" onChange={(e) => setBody(e.target.value)} value={body}/>
+                    <input type="text" onChange={(e) => setBody(e.target.value)} value={body} placeholder="Caption (optional)"/>
                     {error && <p>{error}</p>}
                     </Form.Field>
                     <Button type='submit'>Submit</Button>

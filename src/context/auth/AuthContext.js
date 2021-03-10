@@ -1,6 +1,6 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import authReducer from "./AuthReducer"
-import { ACCEPT_REQUEST, DECLINE_REQUEST,UPDATE_PROFILE_PIC, UPDATE_BIO,CLEAR_ERRORS, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
+import { ACCEPT_REQUEST, DECLINE_REQUEST ,CLEAR_ERRORS, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
 import axios from "axios"
 const AuthContext = createContext();
 
@@ -108,24 +108,6 @@ export function AuthProvider({children}) {
         // TODO:
     }
 
-    const updateBio = async(bio) => {
-        try {
-            const res = await axios.put("http://localhost:5000/users/bio", {bio})
-            console.log(res.data)
-            dispatch({type: UPDATE_BIO, payload: bio})
-        } catch (error) {
-            dispatch({type: SET_ERRORS, payload: {error: "Failed to update bio"}})    
-        }
-    }
-
-    const updateImage = async () => {
-        try {
-            // TODO:
-            await axios.put("http://localhost:5000/users/profile_pic")
-        } catch (error) {
-            dispatch({type: SET_ERRORS, payload: {error: "Failed to update the image"}})    
-        }
-    }
     const value = {
       state,
       dispatch, 
@@ -137,8 +119,6 @@ export function AuthProvider({children}) {
       acceptRequest,
       rejectRequest,
       sendRequest,
-      updateBio,
-      updateImage,
       unfollow
     }
       return (

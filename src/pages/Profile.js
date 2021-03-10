@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Container, Button} from "semantic-ui-react" 
 import {useParams} from "react-router-dom" 
+import Skeleton from 'react-loading-skeleton';
 import ProfileHeader from "../components/profile/ProfileHeader"
 import { useAuth } from '../context/auth/AuthContext'
 import {useFeed} from "../context/feed/FeedContext"
@@ -23,7 +24,7 @@ export default function Profile() {
     }
     return (
         <Container className="mt-50">
-            {selectedUserInfo && <ProfileHeader user={selectedUserInfo} postCount={postCount}/>}
+            {!selectedUserInfo ? (<Skeleton height={150}/>) : (<ProfileHeader user={selectedUserInfo} postCount={postCount}/>)}
             <ProfilePosts posts={selectedUserPosts} userId={selectedUserInfo?._id}/>
             {selectedUserInfo && currentUser.following.includes(selectedUserInfo?._id) && <Button content="Load more images" onClick={() => loadMore()}/>}
         </Container>
