@@ -1,6 +1,6 @@
 import { useEffect, useContext, useReducer, createContext} from "react"
 import authReducer from "./AuthReducer"
-import { ACCEPT_REQUEST, DECLINE_REQUEST ,CLEAR_ERRORS, LOG_OUT, SET_ERRORS, SET_USER} from "./types"
+import { ACCEPT_REQUEST, DECLINE_REQUEST ,CLEAR_ERRORS, LOG_OUT,UNFOLLOW, SET_ERRORS, SET_USER} from "./types"
 import axios from "axios"
 const AuthContext = createContext();
 
@@ -94,18 +94,22 @@ export function AuthProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to reject request"}})
         }
     }
-    const sendRequest = async(id) => {
-        //TODO: FINSIH
-        try {
-            const res = await axios.post("http://localhost:5000/users/" + id)
-            console.log(res.data)
-        } catch(err) {
-            dispatch({type: SET_ERRORS, payload: {error: "Failed to send the request"}})
-        }
+    // const sendRequest = async(id) => {
+    //     //TODO: FINSIH
+    //     try {
+    //         const res = await axios.post("http://localhost:5000/users/" + id)
+    //         console.log(res.data)
+    //     } catch(err) {
+    //         dispatch({type: SET_ERRORS, payload: {error: "Failed to send the request"}})
+    //     }
+    // }
+    const unfollow = async (id ) => {
+        //TODO: MAYBE
     }
-
-    const unfollow = async(id) => {
+    const unfollowFromFeed = (id) => {
         // TODO:
+        console.log("im here from auth context")
+        dispatch({type: UNFOLLOW, payload: id})
     }
 
     const value = {
@@ -118,8 +122,9 @@ export function AuthProvider({children}) {
       googleSignIn,
       acceptRequest,
       rejectRequest,
-      sendRequest,
-      unfollow
+    //   sendRequest,
+      unfollow,
+      unfollowFromFeed
     }
       return (
           <AuthContext.Provider value={value}>

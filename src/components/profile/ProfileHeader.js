@@ -3,17 +3,29 @@ import { useAuth } from '../../context/auth/AuthContext'
 import {Image, Button, Icon} from "semantic-ui-react"
 import {Link} from "react-router-dom"
 import BioUpdateForm from './BioUpdate'
+import { useFeed } from '../../context/feed/FeedContext'
 
 export default function ProfileHeader({user, postCount}) {
     const { state: {currentUser}} = useAuth()
+    const {cancelRequest, sendRequest, unfollow} = useFeed()
     const buttonContent = (user) => {
         if(user.follow_requests.includes(currentUser._id)) return "Cancel Request"
         if(user.followers.includes(currentUser._id)) return "Unfollow"
-        if(currentUser.follow_requests.includes(user._id)) return "Accept request"
         return "Send a follow request"
     }
     const handleClick = e => {
-        console.log("heyy")
+        e.target.disabled = true
+        if (e.target.textContent === "Send a follow request") {
+            console.log("request sent")
+            sendRequest(user._id, currentUser._id)
+        }
+        else if (e.target.textContent === "Unfollow") {
+            console.log("unfollowed")
+        } else if (e.target.textContent === "Cancel Request") {
+            console.log("canceled")
+            cancelRequest(user._id, currentUser._id)
+        }
+        e.target.disabled = false
     }
     const handleImageChange = e => {
         console.log("hey")

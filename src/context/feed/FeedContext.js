@@ -1,7 +1,24 @@
 import {  useContext, useEffect, useReducer, createContext} from "react"
 import feedReducer from "./FeedReducer"
-import { SET_ERRORS, LIKE_UNLIKE_POST,ADD_COMMENT,UPDATE_BIO, DELETE_POST,RESET_USER_PROFILE ,SET_SELECTED_USER, UPDATE_FEED,LIKE_UNLIKE_COMMENT, SET_EXPLORE, DELETE_COMMENT, SET_RECOMMENDED,ADD_EXPLORE, SEND_FOLLOW_REQUEST} from "./types"
+import { SET_ERRORS, 
+    LIKE_UNLIKE_POST,
+    ADD_COMMENT,
+    UPDATE_BIO,
+    DELETE_POST,
+    RESET_USER_PROFILE,
+    SET_SELECTED_USER, 
+    UPDATE_FEED,
+    LIKE_UNLIKE_COMMENT, 
+    SET_EXPLORE, 
+    DELETE_COMMENT, 
+    SET_RECOMMENDED,
+    ADD_EXPLORE,
+    SEND_FOLLOW_REQUEST,
+    CANCEL_REQUEST,
+    UNFOLLOW
+} from "./types"
 import axios from "axios"
+import { useAuth } from "../auth/AuthContext";
 const FeedContext = createContext();
 
 export function useFeed() {
@@ -24,7 +41,7 @@ export const initialState = {
 export function FeedProvider({children}) {
     const [state, dispatch] = useReducer(feedReducer, initialState)
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
-
+    const {unfollowFromFeed} = useAuth()
     useEffect(() => {
         // TODO: FINISH
         axios.get("http://localhost:5000/").then(res => {
@@ -64,13 +81,35 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed like/unlike action"}})
         }
     }
-    const sendRequest = async (recipientId) => {
+    const sendRequest = async (recipientId, current) => {
         try {
             const res = await axios.post("http://localhost:5000/users/"+ recipientId)
-            console.log(res.data)
-            dispatch({type: SEND_FOLLOW_REQUEST, payload: res.data.updatedRecipient})
+            dispatch({type: SEND_FOLLOW_REQUEST, payload: {updatedRecipient: res.data.updatedRecipient, current}})
         } catch (err) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to send follow request"}})
+        }
+    }
+
+    const cancelRequest = async(id, currentId) => {
+        // TODO: TEST THIS OUT
+        try {
+            const res = await axios.post("http://localhost:5000/users/"+ id + "/cancel")
+            console.log(res.data)
+            dispatch({type: CANCEL_REQUEST, payload: currentId})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to cancel follow request"}})
+        }
+    }
+
+    const unfollow = async (id, currentId) => {
+        // TODO: TEST THIS OUT
+        try {
+            const res = await axios.post("http://localhost:5000/users/"+ id + "/unfollow")
+            console.log(res.data)
+            dispatch({type: UNFOLLOW, payload: currentId})
+            unfollowFromFeed(id)
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to unfollow"}})
         }
     }
     const exploreMore = async () =>{
@@ -165,6 +204,8 @@ export function FeedProvider({children}) {
       state,
       likeUnlike,
       sendRequest,
+      cancelRequest,
+      unfollow,
       exploreMore,
       addComment,
       deleteComment,

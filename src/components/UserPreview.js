@@ -15,7 +15,7 @@ export default function UserPreview({user}) {
     const handleClick = e => {
         e.target.disabled = true;
         setSent(true)
-        sendRequest(user._id)
+        sendRequest(user._id, _id)
     }
     return (
         <Card>

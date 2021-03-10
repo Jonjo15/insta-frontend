@@ -1,9 +1,14 @@
-import {SET_AUTHENTICATED, SET_UNAUTHENTICATED,ACCEPT_REQUEST,CLEAR_ERRORS, DECLINE_REQUEST, LOADING_USER, SET_USER, FINISH_LOADING, LOG_OUT, SET_ERRORS, UPDATE_USER} from "./types"
+import {SET_AUTHENTICATED, SET_UNAUTHENTICATED,ACCEPT_REQUEST,CLEAR_ERRORS, DECLINE_REQUEST, LOADING_USER, SET_USER, FINISH_LOADING, LOG_OUT, SET_ERRORS, UPDATE_USER, UNFOLLOW} from "./types"
 import {initialState} from "./AuthContext"
 export default function authReducer (state, action){
     let accepted;
     let newFollowRequests;
     switch(action.type) {
+        case UNFOLLOW: 
+            return {
+                ...state,
+                currentUser: {...state.currentUser, following: [...state.currentUser.following.filter(id => id !== action.payload)]}
+            }
         case SET_UNAUTHENTICATED:
             return {
             ...state,

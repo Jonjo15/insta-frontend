@@ -18,13 +18,42 @@ import {
     SET_SINGLE_POST,
     RESET_SINGLE_POST,
     UPDATE_PROFILE_PIC,
-    UPDATE_BIO
+    UPDATE_BIO,
+    UNFOLLOW,
+    CANCEL_REQUEST
      } from "./types";
 
 export default function feedReducer (state, action){
     let feedCopy;
     let newFeed;
     switch(action.type) {
+        case CANCEL_REQUEST: 
+        // TODO: TEST
+        console.log(state, "reducer cancel request")
+            return {
+                ...state,
+                selectedUserInfo: {...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests.filter(id => id !== action.payload)]},
+                explore: state.explore.map(u => {
+                    if (u._id === state.selectedUserInfo._id) {
+                        u.follow_requests = u.follow_requests.filter(id => id !== action.payload )
+                        return u
+                    }
+                    else return u
+                }),
+                recommended: state.recommended.map(u => {
+                    if (u._id === state.selectedUserInfo._id) {
+                        u.follow_requests = u.follow_requests.filter(id => id !== action.payload)
+                    }
+                    else return u
+                })
+            }
+        case UNFOLLOW: 
+            return {
+                // TODO: TEST THIS OUT
+                ...state,
+                selectedUserInfo: {...state.selectedUserInfo, followers: [...state.selectedUserInfo.followers.filter(id => id !== action.payload)]},
+                selectedUserPosts: []
+            }
         case UPDATE_PROFILE_PIC: 
             return {
                 ...state,
@@ -78,22 +107,26 @@ export default function feedReducer (state, action){
                 skip: state.skip + 25
             }
         case SEND_FOLLOW_REQUEST:
+            console.log(state.recommended, "REDUCER")
+            // TODO: FIX DOESNT PUT THE USER INTO THE FOLLOW_REQUESTS ARRAY
             return {
                 ...state,
                 explore: state.explore.map(u => {
-                    if (u._id !== action.payload._id) {
+                    if (u._id !== action.payload.updatedRecipient._id) {
                         return u
                     } else {
-                        return action.payload
+                        return action.payload.updatedRecipient
                     }
                 }),
                 recommended: state.recommended.map(u => {
-                    if (u._id !== action.payload._id) {
+                    if (u._id !== action.payload.updatedRecipient._id) {
                         return u
                     } else {
-                        return action.payload
+                        return {...action.payload.updatedRecipient}
                     }
-                })
+                }),
+                // TODO: FIX BELOW
+                // selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, action.payload.current]}) : (state.selectedUserInfo)
             }
         case ADD_POST: 
             //TODO:
