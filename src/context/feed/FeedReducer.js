@@ -162,12 +162,14 @@ export default function feedReducer (state, action){
                 })
             }
         case DELETE_POST:
+            // TODO: ADD STUFF FOR SINGLE POST
             return {
                 ...state,
                 feedPosts: state.feedPosts.filter(p => p._id !== action.payload),
                 selectedUserPosts: state.selectedUserPosts.filter(p => p._id !== action.payload)
             }
         case DELETE_COMMENT: 
+        // TODO: ADD STUFF FOR SINGLE POST
         return {
             ...state,
             feedPosts: state.feedPosts.map(p => {
@@ -194,6 +196,7 @@ export default function feedReducer (state, action){
             })
         }
         case LIKE_UNLIKE_COMMENT: 
+        // TODO: ADD STUFF FOR SINGLE POST
             return {
                 ...state,
                 feedPosts: state.feedPosts.map(p => {
@@ -226,6 +229,7 @@ export default function feedReducer (state, action){
                 })
             }
         case LIKE_UNLIKE_POST: 
+        // TODO: ADD STUFF FOR SINGLE POST
             feedCopy = state.feedPosts;
             newFeed = feedCopy.map(p => {
                 if (p._id === action.payload._id) {
