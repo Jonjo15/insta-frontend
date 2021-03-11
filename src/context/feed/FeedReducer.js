@@ -128,9 +128,19 @@ export default function feedReducer (state, action){
                 selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, action.payload.current]}) : (state.selectedUserInfo)
             }
         case ADD_POST: 
-            //TODO:
+            //TODO: TEST THIS OUT
             return {
-                ...state
+                ...state,
+                feedPosts: [{...action.payload.post, poster: {
+                    _id: action.payload.user._id,
+                    username: action.payload.user.username,
+                    profile_pic_url: action.payload.user.profile_pic_url
+                }}, ...state.feedPosts],
+                selectedUserPosts: [{...action.payload.post, poster: {
+                    _id: action.payload.user._id,
+                    username: action.payload.user.username,
+                    profile_pic_url: action.payload.user.profile_pic_url
+                }}, ...state.selectedUserPosts]
             }
         case ADD_COMMENT: 
             return {

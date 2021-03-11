@@ -7,6 +7,7 @@ import { SET_ERRORS,
     DELETE_POST,
     RESET_USER_PROFILE,
     SET_SELECTED_USER, 
+    ADD_POST,
     UPDATE_FEED,
     LIKE_UNLIKE_COMMENT, 
     SET_EXPLORE, 
@@ -198,13 +199,21 @@ export function FeedProvider({children}) {
         // TODO: TEST
         try {
             const res = await axios.get("http://localhost:5000/posts/" + id)
-            console.log(res.data)
+            // console.log(res.data)
             dispatch({type: SET_SINGLE_POST, payload: res.data.post})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to get the post"}})     
         }
     }
-
+    const addPost = async(data, user) => {
+        try {
+            const res = await axios.post("http://localhost:5000/posts", data)
+            console.log(res.data)
+            dispatch({type: ADD_POST, payload: {post: res.data.post, user}})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to upload the post"}})       
+        }
+    }
     const resetSinglePost = () => {
         dispatch({type: RESET_SINGLE_POST})
     }
@@ -216,6 +225,7 @@ export function FeedProvider({children}) {
       unfollow,
       exploreMore,
       addComment,
+      addPost,
       deleteComment,
       likeUnlikeComment,
       deletePost, 

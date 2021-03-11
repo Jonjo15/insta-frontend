@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Modal, Button, Popup, Form} from "semantic-ui-react"
-
+import {useFeed} from "../context/feed/FeedContext"
+import {useAuth} from "../context/auth/AuthContext"
 
 function exampleReducer(state, action) {
     switch (action.type) {
@@ -22,7 +23,8 @@ export default function AddPost() {
     const [file, setFile] = useState("")
     const [fileName, setFileName] = useState("")
     const [error, setError] = useState("")
-
+    const {addPost} = useFeed()
+    const {state: {currentUser}} = useAuth()
     const fileTypes = ["image/png", "image/jpeg"]
 
     const handleSubmit = e => {
