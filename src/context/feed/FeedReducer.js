@@ -28,7 +28,6 @@ export default function feedReducer (state, action){
     let newFeed;
     switch(action.type) {
         case CANCEL_REQUEST: 
-        console.log(state, "reducer cancel request")
             return {
                 ...state,
                 selectedUserInfo: state.selectedUserInfo ? {...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests.filter(id => id !== action.payload.currentId)]} : state.selectedUserInfo,
@@ -67,13 +66,11 @@ export default function feedReducer (state, action){
                 selectedUserInfo: {...state.selectedUserInfo, bio: action.payload}
             }
         case SET_SINGLE_POST:
-            // TODO: FINSIH
             return {
                 ...state,
                 singlePost: action.payload
             }
         case RESET_SINGLE_POST: 
-        // TODO: FINSIH
             return {
                 ...state,
                 singlePost: null,
@@ -166,12 +163,16 @@ export default function feedReducer (state, action){
             return {
                 ...state,
                 feedPosts: state.feedPosts.filter(p => p._id !== action.payload),
-                selectedUserPosts: state.selectedUserPosts.filter(p => p._id !== action.payload)
+                selectedUserPosts: state.selectedUserPosts.filter(p => p._id !== action.payload),
+                singlePost: state.singlePost && state.singlePost._id === action.payload ? null : state.singlePost 
             }
         case DELETE_COMMENT: 
-        // TODO: ADD STUFF FOR SINGLE POST
+        // TODO: TEST 
         return {
             ...state,
+            singlePost: state.singlePost && state.singlePost._id === action.payload.postId ?
+                {...state.singlePost, comments: state.singlePost.comments.filter(c => c._id !== action.payload.commentId)}
+                : state.singlePost,
             feedPosts: state.feedPosts.map(p => {
                 if(p._id !== action.payload.postId) {
                     return p
@@ -196,9 +197,19 @@ export default function feedReducer (state, action){
             })
         }
         case LIKE_UNLIKE_COMMENT: 
-        // TODO: ADD STUFF FOR SINGLE POST
+        // TODO: TEST
             return {
                 ...state,
+                singlePost: state.singlePost && state.singlePost._id === action.payload.postId ? 
+                {...state.singlePost, comments: state.singlePost.comments.map(c => {
+                    if (c._id !== action.payload.updatedComment._id) {
+                        return c
+                    } else {
+                        return {...action.payload.updatedComment, commenter: c.commenter}
+                    }
+                })}
+                : 
+                state.singlePost,
                 feedPosts: state.feedPosts.map(p => {
                     if (p._id !== action.payload.postId) {
                         return p
@@ -229,7 +240,7 @@ export default function feedReducer (state, action){
                 })
             }
         case LIKE_UNLIKE_POST: 
-        // TODO: ADD STUFF FOR SINGLE POST
+        // TODO: TEST
             feedCopy = state.feedPosts;
             newFeed = feedCopy.map(p => {
                 if (p._id === action.payload._id) {
@@ -239,6 +250,10 @@ export default function feedReducer (state, action){
             })
             return {
                 ...state,
+                singlePost: state.singlePost && state.singlePost._id === action.payload._id ? 
+                {...action.payload, poster: state.singlePost.poster}
+                :
+                state.singlePost,
                 feedPosts: newFeed,
                 selectedUserPosts: state.selectedUserPosts.map(p => {
                     if(p._id === action.payload._id) {
@@ -249,6 +264,7 @@ export default function feedReducer (state, action){
                     }
                 })
             }
+            // TODO: PROBABLY REMOVE BELOW
         case UPDATE_USER: 
             return {
                 ...state,

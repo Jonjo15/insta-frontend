@@ -6,7 +6,6 @@ export default function CommentLikeUnlike({comment}) {
     const {state: {currentUser}} = useAuth()
     const {likeUnlikeComment} = useFeed()
     const handleLike = e => {
-        console.log("like")
         likeUnlikeComment(comment._id, comment.post)
     }
     return (

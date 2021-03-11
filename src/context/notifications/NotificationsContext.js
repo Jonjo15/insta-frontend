@@ -19,16 +19,15 @@ export function NotificationsProvider({children}) {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
 
     useEffect(() => {
-        //TODO: FINISH
         axios.get("http://localhost:5000/notifications/").then(res => {
             dispatch({type: SET_NOTIFICATIONS, payload: res.data})
         }).catch(err => {
             console.error(err)
+            dispatch({type: SET_ERROR})
         })
     }, [])
     
     const markNotificationsRead = async (data) => {
-        //TODO: CHeck if this is the right route
         try {
             axios.put("http://localhost:5000/notifications/", data)
             dispatch({type: MARK_ALL_READ})
@@ -37,9 +36,6 @@ export function NotificationsProvider({children}) {
         }
         
     }
-    // const updateUser = (data) => {
-    //     dispatch({type: UPDATE_USER, payload: data})
-    // }
   
     const value = {
       state,

@@ -5,8 +5,6 @@ import { useNotifications } from '../context/notifications/NotificationsContext'
 export default function Notifications() {
     const {markNotificationsRead, state: {notifications}} = useNotifications()
     const markAllRead = e => {
-        console.log("hey")
-        // console.log(notifications.map(n => n._id))
         markNotificationsRead({notifications: notifications.map(n => n._id)})
     }
     return (

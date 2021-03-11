@@ -17,7 +17,6 @@ export default function PostModal({post, open, setOpen}) {
         e.preventDefault()
         addComment(post, currentUser, body)
         setBody("")
-        console.log("submit")
     }
     const handleDeleteComment = id => {
         console.log(id)

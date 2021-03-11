@@ -5,12 +5,10 @@ export default function SingleRequest({request}) {
     const {acceptRequest, rejectRequest} = useAuth()
     const handleAccept = e => {
         e.target.disabled = true
-        console.log("ey")
         acceptRequest(request._id)
     }
     const handleReject = e => {
         e.target.disabled = true
-        console.log("eheh")
         rejectRequest(request._id)
     }
     return (

@@ -20,7 +20,6 @@ const BioUpdateForm = ({token}) => {
     size: undefined,
   })
   const [bio, setBio] = useState("")
-//   const [error, setError] = useState("")
   const { open, size } = state
   const handleSubmit = async e => {
       e.preventDefault()

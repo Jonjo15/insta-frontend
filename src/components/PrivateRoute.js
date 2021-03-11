@@ -3,7 +3,6 @@ import {Route} from "react-router-dom"
 import { useAuth } from '../context/auth/AuthContext'
 import {Redirect} from "react-router-dom"
 export default function PrivateRoute({ component: Component, ...rest }) {
-    //TODO: GET USER FROM AUTH PROVIDDER
     const {state: {authenticated}} = useAuth()
     return (
         <Route

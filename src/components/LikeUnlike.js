@@ -9,7 +9,6 @@ export default function LikeUnlike({post}) {
         likeUnlike(post._id)
     }
     const handleDeletePost = e => {
-        console.log("delete " + post.poster._id)
         deletePost(post._id)
     }
     return (
