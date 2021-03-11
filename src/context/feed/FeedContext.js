@@ -15,6 +15,8 @@ import { SET_ERRORS,
     ADD_EXPLORE,
     SEND_FOLLOW_REQUEST,
     CANCEL_REQUEST,
+    SET_SINGLE_POST,
+    RESET_SINGLE_POST,
     UNFOLLOW
 } from "./types"
 import axios from "axios"
@@ -43,7 +45,6 @@ export function FeedProvider({children}) {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     const {unfollowFromFeed} = useAuth()
     useEffect(() => {
-        // TODO: FINISH
         axios.get("http://localhost:5000/").then(res => {
             console.log(res.data)
             dispatch({type: UPDATE_FEED, payload: res.data.timeline})
@@ -55,13 +56,12 @@ export function FeedProvider({children}) {
     
     useEffect(() => {
         axios.get("http://localhost:5000/explore/" + state.skip).then(res => {
-            // console.log(res.data)
             dispatch({type: SET_EXPLORE, payload: res.data.users})
 
         }).catch(err => {
-            // console.error(err)
             dispatch({type: SET_ERRORS, payload: {error: "Something went wrong"}})
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -74,7 +74,6 @@ export function FeedProvider({children}) {
     const likeUnlike = async (id) => {
         try {
             const res = await axios.put("http://localhost:5000/posts/"+ id)
-            // console.log(res.data)
             dispatch({type: LIKE_UNLIKE_POST, payload: res.data.updatedPost})
 
         } catch (err) {
@@ -82,20 +81,22 @@ export function FeedProvider({children}) {
         }
     }
     const sendRequest = async (recipientId, current) => {
+        let error =""
         try {
             const res = await axios.post("http://localhost:5000/users/"+ recipientId)
             dispatch({type: SEND_FOLLOW_REQUEST, payload: {updatedRecipient: res.data.updatedRecipient, current}})
         } catch (err) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to send follow request"}})
+            error="Failed to send follow request"
         }
+        return error
     }
 
     const cancelRequest = async(id, currentId) => {
-        // TODO: TEST THIS OUT
         try {
             const res = await axios.post("http://localhost:5000/users/"+ id + "/cancel")
             console.log(res.data)
-            dispatch({type: CANCEL_REQUEST, payload: currentId})
+            dispatch({type: CANCEL_REQUEST, payload: {canceled: id, currentId}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to cancel follow request"}})
         }
@@ -193,12 +194,19 @@ export function FeedProvider({children}) {
     const resetProfile = () => {
         dispatch({type: RESET_USER_PROFILE})
     }
-    const setSinglePost = () => {
-        // TODO: FINISH
+    const setSinglePost = async(id) => {
+        // TODO: TEST
+        try {
+            const res = await axios.get("http://localhost:5000/posts/" + id)
+            console.log(res.data)
+            dispatch({type: SET_SINGLE_POST, payload: res.data.post})
+        } catch (error) {
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to get the post"}})     
+        }
     }
 
     const resetSinglePost = () => {
-        // TODO: FINISH
+        dispatch({type: RESET_SINGLE_POST})
     }
     const value = {
       state,

@@ -1,4 +1,4 @@
-import React, {useState}  from 'react'
+import React  from 'react'
 import {Card, Image, Button} from "semantic-ui-react"
 import {useAuth} from "../context/auth/AuthContext"
 import {useFeed} from "../context/feed/FeedContext"
@@ -10,12 +10,14 @@ const createMetaText = (followers, userId) => {
 }
 export default function UserPreview({user}) {
     const {state: {currentUser: {followers, _id}}} = useAuth()
-    const {sendRequest} = useFeed()
-    const [sent, setSent] = useState(false)
+    const {sendRequest, cancelRequest} = useFeed()
     const handleClick = e => {
-        e.target.disabled = true;
-        setSent(true)
-        sendRequest(user._id, _id)
+        if (e.target.textContent === "Cancel request") {
+            cancelRequest(user._id, _id)
+        }
+        else if(e.target.textContent === "Send a follow request") {
+            sendRequest(user._id, _id)
+        }
     }
     return (
         <Card>
@@ -29,8 +31,8 @@ export default function UserPreview({user}) {
                 <Card.Meta>{createMetaText(followers, user._id)}</Card.Meta>
             </Card.Content>
             <Card.Content extra>
-                <Button onClick={handleClick} disabled={user.follow_requests.includes(_id)} basic color='green'>
-                    {user.follow_requests.includes(_id) || sent ? "Sent" : "Send a follow request"}
+                <Button onClick={handleClick} basic color='green'>
+                    {user.follow_requests.includes(_id) ? "Cancel request" : "Send a follow request"}
                 </Button>
             </Card.Content>
         </Card>

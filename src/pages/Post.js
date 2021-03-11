@@ -32,7 +32,6 @@ export default function Post() {
         <Container className="mt-50">
             <div className="modal-grid">
                     <Card fluid>
-                            {/* TODO: CARD BELOW TO THE OTHER SIDE */}
                             <Card fluid>
                                 <Image src={post.poster.profile_pic_url} wrapped ui={false}/>
                             </Card>

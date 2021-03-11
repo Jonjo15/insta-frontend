@@ -28,23 +28,25 @@ export default function feedReducer (state, action){
     let newFeed;
     switch(action.type) {
         case CANCEL_REQUEST: 
-        // TODO: TEST
         console.log(state, "reducer cancel request")
             return {
                 ...state,
-                selectedUserInfo: {...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests.filter(id => id !== action.payload)]},
+                selectedUserInfo: state.selectedUserInfo ? {...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests.filter(id => id !== action.payload.currentId)]} : state.selectedUserInfo,
                 explore: state.explore.map(u => {
-                    if (u._id === state.selectedUserInfo._id) {
-                        u.follow_requests = u.follow_requests.filter(id => id !== action.payload )
+                    if (u._id === action.payload.canceled) {
+                        u.follow_requests = u.follow_requests.filter(id => id !== action.payload.currentId )
                         return u
                     }
                     else return u
                 }),
                 recommended: state.recommended.map(u => {
-                    if (u._id === state.selectedUserInfo._id) {
-                        u.follow_requests = u.follow_requests.filter(id => id !== action.payload)
+                    if (u._id === action.payload.canceled) {
+                        u.follow_requests = u.follow_requests.filter(id => id !== action.payload.currentId)
+                        return u
                     }
-                    else return u
+                    else {
+                        return u
+                    } 
                 })
             }
         case UNFOLLOW: 
@@ -67,12 +69,14 @@ export default function feedReducer (state, action){
         case SET_SINGLE_POST:
             // TODO: FINSIH
             return {
-                ...state
+                ...state,
+                singlePost: action.payload
             }
         case RESET_SINGLE_POST: 
         // TODO: FINSIH
             return {
-                ...state
+                ...state,
+                singlePost: null,
             }
         case RESET_USER_PROFILE: 
             return {
@@ -108,7 +112,6 @@ export default function feedReducer (state, action){
             }
         case SEND_FOLLOW_REQUEST:
             console.log(state.recommended, "REDUCER")
-            // TODO: FIX DOESNT PUT THE USER INTO THE FOLLOW_REQUESTS ARRAY
             return {
                 ...state,
                 explore: state.explore.map(u => {
@@ -125,8 +128,7 @@ export default function feedReducer (state, action){
                         return {...action.payload.updatedRecipient}
                     }
                 }),
-                // TODO: FIX BELOW
-                // selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, action.payload.current]}) : (state.selectedUserInfo)
+                selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, action.payload.current]}) : (state.selectedUserInfo)
             }
         case ADD_POST: 
             //TODO:
