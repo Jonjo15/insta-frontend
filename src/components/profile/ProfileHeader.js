@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuth } from '../../context/auth/AuthContext'
 import {Image, Button, Icon} from "semantic-ui-react"
 import {Link} from "react-router-dom"
@@ -7,7 +7,10 @@ import { useFeed } from '../../context/feed/FeedContext'
 
 export default function ProfileHeader({user, postCount}) {
     const { state: {currentUser}} = useAuth()
-    const {cancelRequest, sendRequest, unfollow} = useFeed()
+    const {cancelRequest, sendRequest, updateImage} = useFeed()
+    // const [imageFile, setImageFile] = useState()
+    const [error, setError] = useState(null)
+    const fileTypes = ["image/png", "image/jpeg"]
     const buttonContent = (user) => {
         if(user.follow_requests.includes(currentUser._id)) return "Cancel Request"
         if(user.followers.includes(currentUser._id)) return "Unfollow"
@@ -28,14 +31,24 @@ export default function ProfileHeader({user, postCount}) {
         e.target.disabled = false
     }
     const handleImageChange = e => {
-        console.log("hey")
-        document.getElementById("profile-pic-input").click()
+        let file = e.target.files[0];
+        if (file && fileTypes.includes(file.type)) {
+            // setImageFile(file)
+            setError(null)
+            // TODO: ADD CHANGE PROFILE IMAGE FUNCTION
+            // updateImage(file) TODO:
+        }
+        else {
+            // setImageFile(null)
+            setError("Choose the right file type (image/png or image/jpeg)")
+        }
     }
     return (
         <div className="container profile-header">
             <div>
                 <Image size="small" circular src={user.profile_pic_url}/>
-                {user._id === currentUser._id && <Icon onClick={handleImageChange} style={{cursor: "pointer"}} size="large" name="edit outline"/>}
+                {user._id === currentUser._id && <Icon onClick={(e) => document.getElementById("profile-pic-input").click()} style={{cursor: "pointer"}} size="large" name="edit outline"/>}
+                {error && <p>{error}</p>}
             </div>
             <div className="profile-info">
                 <div className="username">
@@ -49,7 +62,7 @@ export default function ProfileHeader({user, postCount}) {
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 {currentUser._id === user._id && <BioUpdateForm />}
             </div>
-            <input id="profile-pic-input" type="file" hidden />
+            <input id="profile-pic-input" type="file" hidden onChange={handleImageChange}/>
         </div>
     )
 }
