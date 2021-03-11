@@ -31,6 +31,7 @@ export default function AddPost() {
         e.preventDefault()
         console.log("submit", file, body)
         dispatch({type: "close"})
+        // addPost(data, currentUser) TODO:
     }
     //TODO: FINISH IMAGE UPLOAD
     const handleChange = e => {
