@@ -3,7 +3,6 @@ import {
     UPDATE_FEED,
     CLEAR_ERRORS,
     SET_ERRORS,
-    UPDATE_USER,
     LIKE_UNLIKE_POST, 
     LIKE_UNLIKE_COMMENT, 
     ADD_COMMENT, 
@@ -20,13 +19,20 @@ import {
     UPDATE_PROFILE_PIC,
     UPDATE_BIO,
     UNFOLLOW,
-    CANCEL_REQUEST
+    CANCEL_REQUEST,
+    LOAD_MORE_PROFILE_POSTS
      } from "./types";
 
 export default function feedReducer (state, action){
     let feedCopy;
     let newFeed;
     switch(action.type) {
+        case LOAD_MORE_PROFILE_POSTS: 
+            return {
+                ...state,
+                selectedUserPosts: [...state.selectedUserPosts, ...action.payload]
+                // TODO: TEST
+            }
         case CANCEL_REQUEST: 
             return {
                 ...state,
@@ -55,10 +61,25 @@ export default function feedReducer (state, action){
                 selectedUserInfo: {...state.selectedUserInfo, followers: [...state.selectedUserInfo.followers.filter(id => id !== action.payload)]},
                 selectedUserPosts: []
             }
-        case UPDATE_PROFILE_PIC: 
+        case UPDATE_PROFILE_PIC:
+            // TODO: TEST 
             return {
                 ...state,
-                selectedUserInfo: {...state.selectedUserInfo, profile_pic_url: action.payload}
+                selectedUserInfo: {...state.selectedUserInfo, profile_pic_url: action.payload.url},
+                selectedUserPosts: state.selectedUserPosts.map(p => {
+                    if (p.poster._id !== state.selectedUserInfo._id) {
+                        return p
+                    } else {
+                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.url}}
+                    }
+                }),
+                feedPosts: state.feedPosts.map(p => {
+                    if(p.poster._id !== action.payload.user._id) {
+                        return p
+                    } else {
+                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.url}}
+                    }
+                })
             }
         case UPDATE_BIO: 
             return {
@@ -273,12 +294,6 @@ export default function feedReducer (state, action){
                         return p
                     }
                 })
-            }
-            // TODO: PROBABLY REMOVE BELOW
-        case UPDATE_USER: 
-            return {
-                ...state,
-                //TODO:
             }
         case SET_SELECTED_USER:
             return {

@@ -33,9 +33,7 @@ export default function ProfileHeader({ user, postCount }) {
     const handleImageChange = e => {
         let file = e.target.files[0];
         if (file && fileTypes.includes(file.type)) {
-            // setImageFile(file)
             setError(null)
-            // TODO: ADD CHANGE PROFILE IMAGE FUNCTION
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = () => {
@@ -47,25 +45,22 @@ export default function ProfileHeader({ user, postCount }) {
                     body: formData
                   })
                   .then(res => {return res.json()})
-                  .then(img => console.log(img.secure_url))
+                  .then(img => updateImage(img.secure_url))
                   .catch(err => console.log(err));
-                //   TODO: TAKE THE URL AND SAVE IT IN THE DATABASE
             };
             reader.onerror = () => {
                 console.error('AHHHHHHHH!!');
                 setError('something went wrong!');
             };
-            // updateImage(file) TODO:
         }
         else {
-            // setImageFile(null)
             setError("Choose the right file type (image/png or image/jpeg)")
         }
     }
     return (
         <div className="container profile-header">
             <div>
-                <Image size="small" circular src={user.profile_pic_url} />
+                <Image bordered size="small" circular src={user.profile_pic_url} />
                 {user._id === currentUser._id && <Icon onClick={(e) => document.getElementById("profile-pic-input").click()} style={{ cursor: "pointer" }} size="large" name="edit outline" />}
                 {error && <p>{error}</p>}
             </div>

@@ -18,7 +18,9 @@ import { SET_ERRORS,
     CANCEL_REQUEST,
     SET_SINGLE_POST,
     RESET_SINGLE_POST,
-    UNFOLLOW
+    UPDATE_PROFILE_PIC,
+    UNFOLLOW,
+    LOAD_MORE_PROFILE_POSTS
 } from "./types"
 import axios from "axios"
 import { useAuth } from "../auth/AuthContext";
@@ -170,6 +172,7 @@ export function FeedProvider({children}) {
         try {
             const res = await axios.get("http://localhost:5000/users/"+ id + "/" + skip)
             console.log(res.data)
+            dispatch({type: LOAD_MORE_PROFILE_POSTS, payload: res.data.posts})
             //TODO: FINISH
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
@@ -184,11 +187,11 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to update bio"}})    
         }
     }
-    const updateImage = async (base64) => {
+    const updateImage = async (url) => {
         try {
-            // TODO:
-            const res = await axios.put("http://localhost:5000/users/profile_image", {data: base64})
+            const res = await axios.put("http://localhost:5000/users/profile_image", {profile_pic_url: url})
             console.log(res.data)
+            dispatch({type: UPDATE_PROFILE_PIC, payload: {url, user: res.data.response}})
         } catch (error) {
             console.log(error.message)
             dispatch({type: SET_ERRORS, payload: {error: "Failed to update the image"}})    

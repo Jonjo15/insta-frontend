@@ -20,8 +20,8 @@ export default function AddPost() {
       })
     const { open } = state
     const [body, setBody] = useState("")
-    const [file, setFile] = useState("")
-    const [fileName, setFileName] = useState("")
+    const [file, setFile] = useState(null)
+    // const [fileName, setFileName] = useState("")
     const [error, setError] = useState("")
     const {addPost} = useFeed()
     const {state: {currentUser}} = useAuth()
@@ -29,9 +29,15 @@ export default function AddPost() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log("submit", file, body)
-        dispatch({type: "close"})
-        // addPost(data, currentUser) TODO:
+        if (!file) {
+          setError("You have to choose a file")
+          return
+        } else {
+          // addPost(data, currentUser) TODO: 
+          setError("")
+          dispatch({type: "close"})
+
+        }
     }
     //TODO: FINISH IMAGE UPLOAD
     const handleChange = e => {
@@ -39,12 +45,12 @@ export default function AddPost() {
       console.log(e.target.value)
       if (file && fileTypes.includes(file.type)) {
           setFile(file)
-          setFileName(e.target.value)
+          // setFileName(e.target.value)
           setError("")
       }
       else {
-          setFile("")
-          setFileName("")
+          setFile(null)
+          // setFileName("")
           setError("Choose the right file type (image/png or image/jpeg)")
       }
     }
@@ -58,7 +64,7 @@ export default function AddPost() {
               dispatch({ type: 'close' })
               setBody("")
               setFile("")
-              setFileName("")
+              // setFileName("")
             }}
         >
         <Modal.Header>Create a new post</Modal.Header>
@@ -66,7 +72,7 @@ export default function AddPost() {
           <Form onSubmit={handleSubmit}>
                     <Form.Field>
                     <label>Select an image for your new post</label>
-                    <input type="file" onChange={handleChange} value={fileName} placeholder='New Img' />
+                    <input type="file" onChange={handleChange} placeholder='New Img' />
                     <input type="text" onChange={(e) => setBody(e.target.value)} value={body} placeholder="Caption (optional)"/>
                     {error && <p>{error}</p>}
                     </Form.Field>
