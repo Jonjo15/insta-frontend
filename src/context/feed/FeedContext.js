@@ -211,6 +211,7 @@ export function FeedProvider({children}) {
         }
     }
     const addPost = async(data, user) => {
+        console.log(data, user)
         try {
             const res = await axios.post("http://localhost:5000/posts", data)
             console.log(res.data)

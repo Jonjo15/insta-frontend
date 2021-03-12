@@ -33,8 +33,10 @@ export default function AddPost() {
           setError("You have to choose a file")
           return
         } else {
-          // addPost(data, currentUser) TODO: 
+          addPost({picture: file, body}, currentUser)
           setError("")
+          setBody("")
+          setFile(null)
           dispatch({type: "close"})
 
         }
@@ -42,15 +44,21 @@ export default function AddPost() {
     //TODO: FINISH IMAGE UPLOAD
     const handleChange = e => {
       let file = e.target.files[0];
-      console.log(e.target.value)
       if (file && fileTypes.includes(file.type)) {
-          setFile(file)
-          // setFileName(e.target.value)
-          setError("")
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
+            setFile(reader.result) 
+            setError("")
+          };
+          reader.onerror = () => {
+            console.error('AHHHHHHHH!!'); 
+            setFile(null)
+            setError('something went wrong!');
+          };
       }
       else {
           setFile(null)
-          // setFileName("")
           setError("Choose the right file type (image/png or image/jpeg)")
       }
     }
