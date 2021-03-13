@@ -187,11 +187,11 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to update bio"}})    
         }
     }
-    const updateImage = async (url) => {
+    const updateImage = async (base64) => {
         try {
-            const res = await axios.put("http://localhost:5000/users/profile_image", {profile_pic_url: url})
+            const res = await axios.put("http://localhost:5000/users/profile_image", {profile_pic_url: base64})
             console.log(res.data)
-            dispatch({type: UPDATE_PROFILE_PIC, payload: {url, user: res.data.response}})
+            dispatch({type: UPDATE_PROFILE_PIC, payload: {url: base64, user: res.data.response}})
         } catch (error) {
             console.log(error.message)
             dispatch({type: SET_ERRORS, payload: {error: "Failed to update the image"}})    

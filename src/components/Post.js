@@ -13,10 +13,9 @@ export default function Post({post}) {
             <Card.Header>
                 <Card fluid>
                     <Card.Content>
-                        <Image
-                        circular
-                        floated='left'
-                        size='mini'
+                        <img
+                        className="post-profile-pic"
+                        alt="profile of poster"
                         src={post.poster.profile_pic_url}
                         />
                         <Card.Header style={{marginTop: 5, marginLeft: 5}}><Link to={"/users/" + post.poster._id}>{post.poster.username}</Link></Card.Header>
@@ -29,9 +28,9 @@ export default function Post({post}) {
                 <Card.Meta>
                     <span className='date'>{dayjs(post.createdAt).fromNow()}</span>
                 </Card.Meta>
-                {post.body && <Card.Description>
-                    <Link className="mr-10" to={"/users/" + post.poster._id}>{post.poster.username}</Link> {post.body}
-                </Card.Description>}
+                <Card.Description>
+                    <Link className="mr-10 bolder" to={"/users/" + post.poster._id}>{post.poster.username}</Link> {post.body}
+                </Card.Description>
             </Card.Content>
             <Card.Content extra>
                 <LikeUnlike post={post}/>

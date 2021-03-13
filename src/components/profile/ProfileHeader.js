@@ -37,16 +37,17 @@ export default function ProfileHeader({ user, postCount }) {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = () => {
-                let formData = new FormData();
-                formData.append('file', file);
-                formData.append('upload_preset', "moxqjptj");
-                fetch("https://api.cloudinary.com/v1_1/jonjo15/image/upload", {
-                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                    body: formData
-                  })
-                  .then(res => {return res.json()})
-                  .then(img => updateImage(img.secure_url))
-                  .catch(err => console.log(err));
+                // let formData = new FormData();
+                // formData.append('file', file);
+                // formData.append('upload_preset', "moxqjptj");
+                updateImage(reader.result)
+                // fetch("https://api.cloudinary.com/v1_1/jonjo15/image/upload", {
+                //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                //     body: formData
+                //   })
+                //   .then(res => {return res.json()})
+                //   .then(img => updateImage(img.secure_url))
+                //   .catch(err => console.log(err));
             };
             reader.onerror = () => {
                 console.error('AHHHHHHHH!!');
@@ -60,7 +61,7 @@ export default function ProfileHeader({ user, postCount }) {
     return (
         <div className="container profile-header">
             <div>
-                <Image bordered size="small" circular src={user.profile_pic_url} />
+                <img className="profile-image" alt="profile" src={user.profile_pic_url} />
                 {user._id === currentUser._id && <Icon onClick={(e) => document.getElementById("profile-pic-input").click()} style={{ cursor: "pointer" }} size="large" name="edit outline" />}
                 {error && <p>{error}</p>}
             </div>
