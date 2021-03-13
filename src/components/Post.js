@@ -4,6 +4,8 @@ import {Link} from "react-router-dom"
 import LikeUnlike from "./LikeUnlike"
 import dayjs from "dayjs"
 import Modal from "./Modal"
+// TODO: USE CLOUDINARY IMAGE
+import {Image as CloudinaryImage} from "cloudinary-react"
 var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 export default function Post({post}) {
