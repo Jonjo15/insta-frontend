@@ -217,6 +217,7 @@ export function FeedProvider({children}) {
             console.log(res.data)
             dispatch({type: ADD_POST, payload: {post: res.data.post, user}})
         } catch (error) {
+            console.log(error)
             dispatch({type: SET_ERRORS, payload: {error: "Failed to upload the post"}})       
         }
     }

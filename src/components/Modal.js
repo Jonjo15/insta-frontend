@@ -32,7 +32,7 @@ export default function PostModal({post, open, setOpen}) {
                     <Card fluid>
                             {/* TODO: CARD BELOW TO THE OTHER SIDE */}
                             <Card fluid>
-                                <Image src={post.poster.profile_pic_url} wrapped ui={false}/>
+                                <Image src={post.picture} wrapped ui={false}/>
                             </Card>
                     </Card>
                     <div className="modal-right">
