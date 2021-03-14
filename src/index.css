@@ -38,7 +38,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(196, 196, 196);
+  background-color: rgba(196, 196, 196, 0.5);
   min-height: 70vh;
   padding-bottom: 0;
   margin-bottom: 0;
@@ -129,13 +129,16 @@ button {
   border-bottom: 1px solid grey;
 }
 .profile-grid {
-  max-width: 1080px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 30px;
 }
 .post-preview {
   margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  
 }
 .count {
   margin-right: 10px;
@@ -179,4 +182,20 @@ button {
   justify-content: center;
   align-items: center;
   background-color: rgba(33,33,33, 0.2) !important
+}
+.preview-post-image {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+}
+.absolute-preview {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+}
+.absolute-preview:hover {
+  background-color: rgba(33,33,33, 0.4);
 }

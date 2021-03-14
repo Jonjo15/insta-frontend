@@ -128,6 +128,7 @@ export function FeedProvider({children}) {
     const addComment = async (post, currentUser, body) => {
         try {
             const res = await axios.post("http://localhost:5000/posts/"+ post._id, {body})
+            console.log(res.data)
             dispatch({type: ADD_COMMENT, payload: {post, currentUser, updatedPost: res.data.updatedPost, comment: res.data.comment}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Post the comment"}})
@@ -204,7 +205,7 @@ export function FeedProvider({children}) {
         // TODO: TEST
         try {
             const res = await axios.get("http://localhost:5000/posts/" + id)
-            // console.log(res.data)
+            console.log(res.data)
             dispatch({type: SET_SINGLE_POST, payload: res.data.post})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to get the post"}})     

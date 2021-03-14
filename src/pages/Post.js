@@ -29,6 +29,7 @@ export default function Post() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.postId])
     return (
+        post &&
         <Container className="mt-50">
             <div className="modal-grid">
                     <Card fluid>

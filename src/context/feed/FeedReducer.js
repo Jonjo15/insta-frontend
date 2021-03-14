@@ -149,18 +149,19 @@ export default function feedReducer (state, action){
                 selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, action.payload.current]}) : (state.selectedUserInfo)
             }
         case ADD_POST: 
-            //TODO: TEST THIS OUT
             return {
                 ...state,
                 feedPosts: [{...action.payload.post, poster: {
                     _id: action.payload.user._id,
                     username: action.payload.user.username,
-                    profile_pic_url: action.payload.user.profile_pic_url
+                    profile_pic_url: action.payload.user.profile_pic_url,
+                    profile_public_id: action.payload.user.profile_public_id
                 }}, ...state.feedPosts],
                 selectedUserPosts: [{...action.payload.post, poster: {
                     _id: action.payload.user._id,
                     username: action.payload.user.username,
-                    profile_pic_url: action.payload.user.profile_pic_url
+                    profile_pic_url: action.payload.user.profile_pic_url,
+                    profile_public_id: action.payload.user.profile_public_id
                 }}, ...state.selectedUserPosts]
             }
         case ADD_COMMENT: 
@@ -187,7 +188,14 @@ export default function feedReducer (state, action){
                             profile_pic_url: action.payload.currentUser.profile_pic_url
                         }}]}
                     }
-                })
+                }),
+                singlePost: state.singlePost && action.payload.updatedPost._id === state.singlePost._id ?
+                {...state.singlePost, poster: state.singlePost.poster, comments: [...state.singlePost.comments, {...action.payload.comment, commenter: {
+                    username: action.payload.currentUser.username,
+                    _id: action.payload.currentUser._id,
+                    profile_pic_url: action.payload.currentUser.profile_pic_url
+                }}]} : null
+                // TODO: TEST
             }
         case DELETE_POST:
             // TODO: ADD STUFF FOR SINGLE POST
