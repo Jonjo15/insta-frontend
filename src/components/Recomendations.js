@@ -1,12 +1,12 @@
 import React from 'react'
 import {Link} from "react-router-dom"
-import {Grid, Button} from "semantic-ui-react"
+import {Grid} from "semantic-ui-react"
 import {useFeed } from "../context/feed/FeedContext"
 import UserPreview from "./UserPreview"
 export default function Recomendations() {
     const {state: {recommended}} = useFeed()
     return (
-        <div>
+        <div className="fixed">
             <h2>Recommendations</h2>
             <Grid>
                 <Grid.Column width={9}>

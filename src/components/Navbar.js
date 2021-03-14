@@ -10,7 +10,7 @@ import Requests from './Requests'
 export default function Navbar() {
     return (
         <Container>
-          <Menu>
+          <Menu fixed="top">
             <Menu.Item
             icon="home"
             size="massive"

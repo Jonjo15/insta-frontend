@@ -8,8 +8,7 @@ export default function Home() {
     const {state: {authenticated}} = useAuth()
     
     return (
-        authenticated ? (<Container className="mt-50">
-            <h1 className="center">Home </h1>
+        authenticated ? (<Container className="mt-100">
             <Grid>
                 <Grid.Column width={10}>
                     <HomeFeed />

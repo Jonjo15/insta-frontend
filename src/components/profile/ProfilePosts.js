@@ -7,7 +7,7 @@ export default function ProfilePosts({posts, userId}) {
         following.includes(userId) || _id === userId ? (<div className="profile-grid">
             {posts.length === 0 && <p>No posts yet</p>}
             {posts.map(p => <PostPreview key={p._id} post={p}/>)}
-        </div>) : (<p>You need to follow this user to see their posts</p>)
+        </div>) : null
         
     )
 }

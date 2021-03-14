@@ -283,20 +283,20 @@ export default function feedReducer (state, action){
             feedCopy = state.feedPosts;
             newFeed = feedCopy.map(p => {
                 if (p._id === action.payload._id) {
-                    return {...action.payload, poster: p.poster}
+                    return {...action.payload, poster: p.poster, comments: p.comments}
                 }
                 else return p
             })
             return {
                 ...state,
                 singlePost: state.singlePost && state.singlePost._id === action.payload._id ? 
-                {...action.payload, poster: state.singlePost.poster}
+                {...action.payload, poster: state.singlePost.poster, comments: state.singlePost.comments}
                 :
                 state.singlePost,
                 feedPosts: newFeed,
                 selectedUserPosts: state.selectedUserPosts.map(p => {
                     if(p._id === action.payload._id) {
-                        return {...action.payload, poster: p.poster}
+                        return {...action.payload, poster: p.poster, comments: p.comments}
                     }
                     else {
                         return p

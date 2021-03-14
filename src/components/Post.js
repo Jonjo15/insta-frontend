@@ -38,7 +38,7 @@ export default function Post({post}) {
                 <LikeUnlike post={post}/>
                 <Modal post={post} open={open} setOpen={setOpen}/>
             {post.comments.length === 0 && <Card.Description className="py-2">No comments yet</Card.Description>}
-            {post.comments.length > 0 && <Card.Description>{post.comments[post.comments.length - 1].commenter.username}</Card.Description>}
+            {post.comments.length > 0 && <Card.Description className="py-2"><Link className="mr-10 bolder" to={"/users/"+ post.comments[post.comments.length -1].commenter._id}>{post.comments[post.comments.length - 1].commenter.username}</Link>{post.comments[post.comments.length -1].body}</Card.Description>}
             </Card.Content>
         </Card>
     )

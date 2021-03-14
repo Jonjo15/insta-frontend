@@ -3,6 +3,7 @@ import {Card, Image, Button} from "semantic-ui-react"
 import {useAuth} from "../context/auth/AuthContext"
 import {useFeed} from "../context/feed/FeedContext"
 import {Link} from "react-router-dom"
+
 const createMetaText = (followers, userId) => {
     let ids = followers.map(f => f._id)
     let text = ids.includes(userId) ? "Follows you" : "Does not follow you"

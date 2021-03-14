@@ -46,6 +46,9 @@ button {
 .mr-10 {
   margin-right: 10px;
 }
+.mr-2 {
+  margin-right: 5px;
+}
 .explore-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -198,4 +201,10 @@ button {
 }
 .absolute-preview:hover {
   background-color: rgba(33,33,33, 0.4);
+}
+.fixed {
+  position: fixed;
+}
+.mb-10 {
+  margin-bottom: 10px;
 }
