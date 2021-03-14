@@ -66,7 +66,7 @@ export default function Post() {
                         
                         <div className="modal-post-form">
                             <div className="w-100 p-10">
-                                <LikeUnlike post={post}/>
+                                <LikeUnlike post={post} singlePost={true}/>
                             </div>
                             <div className="w-100 p-10">
                                 <small>{dayjs(post.createdAt).fromNow()}</small>

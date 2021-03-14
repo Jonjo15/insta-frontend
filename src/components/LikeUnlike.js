@@ -2,14 +2,19 @@ import React from 'react'
 import {Icon, Popup } from "semantic-ui-react"
 import {useAuth} from "../context/auth/AuthContext"
 import { useFeed } from '../context/feed/FeedContext'
-export default function LikeUnlike({post}) {
+import {useHistory} from "react-router-dom"
+export default function LikeUnlike({post, singlePost}) {
     const {state: {currentUser}} = useAuth()
     const {likeUnlike, deletePost} = useFeed()
+    const history = useHistory()
     const handleLike = e => {
         likeUnlike(post._id)
     }
     const handleDeletePost = e => {
         deletePost(post._id)
+        if(singlePost) {
+            history.push("/")
+        }
     }
     return (
         <div className="post-like-unlike">
