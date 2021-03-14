@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Modal, Image, Card, Button, Icon } from "semantic-ui-react"
 import {Link} from "react-router-dom"
 import dayjs from "dayjs"
+import {Image as CloudinaryImage} from "cloudinary-react"
 import LikeUnlike from "./LikeUnlike"
 import CommentLikeUnlike from "./CommentLikeUnlike"
 import {useFeed} from "../context/feed/FeedContext"
@@ -31,18 +32,17 @@ export default function PostModal({post, open, setOpen}) {
                 <div className="modal-grid">
                     <Card fluid>
                             {/* TODO: CARD BELOW TO THE OTHER SIDE */}
-                            <Card fluid>
+                            <Card fluid className="align-center">
                                 <Image className="modal-post-image" src={post.picture} wrapped ui={false}/>
                             </Card>
                     </Card>
                     <div className="modal-right">
                         <Card fluid>
-                            <Card.Content>
-                                <Image
-                                circular
-                                floated='left'
-                                size='mini'
-                                src={post.poster.profile_pic_url}
+                            <Card.Content className="flex">
+                                <CloudinaryImage
+                                    cloudName="jonjo15"
+                                    className="post-profile-pic"
+                                    publicId={post.poster.profile_pic_url}
                                 />
                                 <Card.Header style={{marginTop: 5, marginLeft: 5}}><Link to={"/users/" + post.poster._id}>{post.poster.username}</Link></Card.Header>
                             </Card.Content>

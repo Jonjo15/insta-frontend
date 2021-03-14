@@ -70,16 +70,17 @@ export default function feedReducer (state, action){
                     if (p.poster._id !== state.selectedUserInfo._id) {
                         return p
                     } else {
-                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.url}}
+                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.url, profile_public_id: action.payload.user.profile_public_id}}
                     }
                 }),
-                feedPosts: state.feedPosts.map(p => {
-                    if(p.poster._id !== action.payload.user._id) {
+                feedPosts: state.feedPosts.length > 0 ? state.feedPosts.map(p => {
+                    console.log(p)
+                    if(p?.poster?._id !== action.payload.user._id) {
                         return p
                     } else {
-                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.url}}
+                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.url, profile_public_id: action.payload.user.profile_public_id}}
                     }
-                })
+                }) : state.feedPosts
             }
         case UPDATE_BIO: 
             return {

@@ -14,11 +14,11 @@ export default function Post({post}) {
         <Card fluid>
             <Card.Header>
                 <Card fluid>
-                    <Card.Content>
-                        <img
-                        className="post-profile-pic"
-                        alt="profile of poster"
-                        src={post.poster.profile_pic_url}
+                    <Card.Content className="flex">
+                        <CloudinaryImage
+                            cloudName="jonjo15"
+                            className="post-profile-pic"
+                            publicId={post.poster.profile_public_id}
                         />
                         <Card.Header style={{marginTop: 5, marginLeft: 5}}><Link to={"/users/" + post.poster._id}>{post.poster.username}</Link></Card.Header>
                     </Card.Content>

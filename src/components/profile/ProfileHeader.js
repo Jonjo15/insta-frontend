@@ -4,7 +4,7 @@ import { Image, Button, Icon } from "semantic-ui-react"
 import { Link } from "react-router-dom"
 import BioUpdateForm from './BioUpdate'
 import { useFeed } from '../../context/feed/FeedContext'
-
+import {Image as CloudinaryImage} from "cloudinary-react"
 export default function ProfileHeader({ user, postCount }) {
     const { state: { currentUser } } = useAuth()
     const { cancelRequest, sendRequest, updateImage } = useFeed()
@@ -61,7 +61,7 @@ export default function ProfileHeader({ user, postCount }) {
     return (
         <div className="container profile-header">
             <div>
-                <img className="profile-image" alt="profile" src={user.profile_pic_url} />
+                <CloudinaryImage className="profile-image" cloudName="jonjo15" alt="profile" publicId={user.profile_public_id}></CloudinaryImage>
                 {user._id === currentUser._id && <Icon onClick={(e) => document.getElementById("profile-pic-input").click()} style={{ cursor: "pointer" }} size="large" name="edit outline" />}
                 {error && <p>{error}</p>}
             </div>
