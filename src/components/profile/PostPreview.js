@@ -7,7 +7,7 @@ export default function PostPreview({post}) {
         <div className="post-preview">
             {/* TODO: Change image below this is for testing  */}
             <Modal open={open} setOpen={setOpen} post={post}/>
-            <Image onClick={(e) => setOpen(true)} style={{cursor: "pointer"}} size="medium" src="https://res.cloudinary.com/jonjo15/image/upload/v1612707833/jqdeohhezcby05lismmr.png" alt="post"/>
+            <Image onClick={(e) => setOpen(true)} style={{cursor: "pointer"}} size="medium" src={post.picture} alt="post"/>
         </div>
     )
 }
