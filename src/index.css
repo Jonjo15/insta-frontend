@@ -65,6 +65,7 @@ button {
 .modal-right {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 .comment-card {
   padding: 10px 0px 0px 10px;
@@ -84,6 +85,7 @@ button {
   height: min-content;
   margin-top: 15px;
   justify-content: flex-end;
+  justify-self: flex-end;
 }
 .comment-form {
   display: flex;
@@ -176,4 +178,5 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(33,33,33, 0.2) !important
 }

@@ -65,20 +65,19 @@ export default function feedReducer (state, action){
             // TODO: TEST 
             return {
                 ...state,
-                selectedUserInfo: {...state.selectedUserInfo, profile_pic_url: action.payload.url},
+                selectedUserInfo: {...state.selectedUserInfo, profile_pic_url: action.payload.user.profile_pic_url, profile_public_id: action.payload.user.profile_public_id},
                 selectedUserPosts: state.selectedUserPosts.map(p => {
                     if (p.poster._id !== state.selectedUserInfo._id) {
                         return p
                     } else {
-                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.url, profile_public_id: action.payload.user.profile_public_id}}
+                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.user.profile_pic_url, profile_public_id: action.payload.user.profile_public_id}}
                     }
                 }),
                 feedPosts: state.feedPosts.length > 0 ? state.feedPosts.map(p => {
-                    console.log(p)
                     if(p?.poster?._id !== action.payload.user._id) {
                         return p
                     } else {
-                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.url, profile_public_id: action.payload.user.profile_public_id}}
+                        return {...p, poster: {...p.poster, profile_pic_url: action.payload.user.profile_pic_url, profile_public_id: action.payload.user.profile_public_id}}
                     }
                 }) : state.feedPosts
             }
