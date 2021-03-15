@@ -100,6 +100,7 @@ export default function feedReducer (state, action){
         case RESET_USER_PROFILE: 
             return {
                 ...state,
+                profileSkip: 0,
                 selectedUserPosts: [],
                 selectedUserInfo: null,
                 postCount: 0,
@@ -152,6 +153,8 @@ export default function feedReducer (state, action){
         case ADD_POST: 
             return {
                 ...state,
+                profileSkip: state.profileSkip + 1,
+                postCount: state.postCount ? state.postCount + 1 : null,
                 feedPosts: [{...action.payload.post, poster: {
                     _id: action.payload.user._id,
                     username: action.payload.user.username,

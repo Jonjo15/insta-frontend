@@ -39,6 +39,7 @@ export const initialState = {
     feedPosts: [],
     explore: [],
     skip: 0,
+    profileSkip: 0,
     exploreEndFetch: false,
     recommended: [],
     loading: true,
@@ -122,10 +123,8 @@ export function FeedProvider({children}) {
     }
 
     const unfollow = async (id, currentId) => {
-        // TODO: TEST THIS OUT
         try {
-            const res = await axios.post("http://localhost:5000/users/"+ id + "/unfollow")
-            console.log(res.data)
+            await axios.post("http://localhost:5000/users/"+ id + "/unfollow")
             dispatch({type: UNFOLLOW, payload: currentId})
             unfollowFromFeed(id)
         } catch (error) {
@@ -183,10 +182,13 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to find User"}})  
         }
     }
-    const loadMoreProfilePosts = async (id, skip) => {
+    const loadMoreProfilePosts = async (id, skip, setNoMorePhotosLeft) => {
         try {
-            const res = await axios.get("http://localhost:5000/users/"+ id + "/" + skip)
+            const res = await axios.get("http://localhost:5000/users/"+ id + "/" + (skip + state.profileSkip))
             console.log(res.data)
+            if (res.data.posts.length < 9) {
+                setNoMorePhotosLeft(true)
+            }
             dispatch({type: LOAD_MORE_PROFILE_POSTS, payload: res.data.posts})
             //TODO: FINISH
         } catch (error) {

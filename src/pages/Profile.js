@@ -8,6 +8,7 @@ import {useFeed} from "../context/feed/FeedContext"
 import ProfilePosts from '../components/profile/ProfilePosts'
 export default function Profile() {
     const [skip, setSkip] = useState(9)
+    const [noMorePhotosLeft, setNoMorePhotosLeft] = useState(false)
     const params = useParams()
     const history = useHistory()
     const {state: {currentUser}} = useAuth()
@@ -20,14 +21,15 @@ export default function Profile() {
             // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.userId])
     const loadMore = e => {
-        loadMoreProfilePosts(skip)
+        console.log("hey", skip)
+        loadMoreProfilePosts(params.userId, skip, setNoMorePhotosLeft )
         setSkip(s => s + 9)
     }
     return (
         <Container className="mt-50">
             {!selectedUserInfo ? (<Skeleton height={150}/>) : (<ProfileHeader user={selectedUserInfo} postCount={postCount}/>)}
             <ProfilePosts posts={selectedUserPosts} userId={selectedUserInfo?._id}/>
-            {selectedUserInfo && currentUser.following.includes(selectedUserInfo?._id) && <Button content="Load more images" onClick={() => loadMore()}/>}
+            {selectedUserInfo && !noMorePhotosLeft && <Button disabled={noMorePhotosLeft} content="Load more images" onClick={loadMore}/>}
         </Container>
     )
 }
