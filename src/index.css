@@ -208,3 +208,15 @@ button {
 .mb-10 {
   margin-bottom: 10px;
 }
+.below-form-buttons {
+  margin-top: 33px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: baseline; */
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}

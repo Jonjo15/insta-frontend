@@ -23,7 +23,7 @@ export default function LoginRegisterForm() {
     return (
         <Container>
             {error && <p>{error}</p>}
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} className="flex-column">
                 {!isLogin && <Form.Field required>
                 <label>Username</label>
                 <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' />
@@ -41,19 +41,23 @@ export default function LoginRegisterForm() {
             {/* <Button className="center" onClick={handleGoogle} color='google plus'>
                 <Icon name='google plus' /> Sign In With Google
             </Button> */}
-            <GoogleLogin
-                clientId="475278432981-mgmm2m3plbfcr09htfdjnvd0ha1ik99j.apps.googleusercontent.com"
-                buttonText="Sign In With Google"
-                onSuccess={handleGoogle}
-                onFailure={handleGoogle}
-            />
-            <div className="m-auto">
-                <span>{isLogin ? "Don't have an account? Register" : "Alredy have an account? Log In"}</span>
-                <Button onClick={() => {
-                    clearErrors()
-                    setIsLogin(c => !c)
-                    }} content="Here"/>
+            <div className="below-form-buttons">
+                <GoogleLogin
+                    clientId="475278432981-mgmm2m3plbfcr09htfdjnvd0ha1ik99j.apps.googleusercontent.com"
+                    buttonText="Sign In With Google"
+                    onSuccess={handleGoogle}
+                    onFailure={handleGoogle}
+                    className="mb-10"
+                />
+                <div className="m-auto mt-5">
+                    <span className="mr-2 mt-5">{isLogin ? "Don't have an account? Register" : "Alredy have an account? Log In"}</span>
+                    <Button  onClick={() => {
+                        clearErrors()
+                        setIsLogin(c => !c)
+                        }} content="Here"/>
+                </div>
             </div>
+            
             
         </Container>
     )

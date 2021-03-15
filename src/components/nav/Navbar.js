@@ -5,9 +5,10 @@ import AddPost from './AddPost'
 import NavUserDropdown from './NavUserDropdown'
 import Notifications from "./Notifications"
 import Requests from './Requests'
-
+import {useAuth} from "../../context/auth/AuthContext"
 
 export default function Navbar() {
+    const {state: {authenticated}} = useAuth()
     return (
         <Container>
           <Menu >
@@ -17,13 +18,12 @@ export default function Navbar() {
             as={Link}
             to="/"
             />
-            <Menu.Menu position="right">
+            {authenticated && (<Menu.Menu position="right">
                 <AddPost />
                 <Requests />
                 <Notifications />
                 <NavUserDropdown />
-            </Menu.Menu>
-            
+            </Menu.Menu>)}
         </Menu>
         </Container>
     )
