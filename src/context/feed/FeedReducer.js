@@ -56,9 +56,8 @@ export default function feedReducer (state, action){
             }
         case UNFOLLOW: 
             return {
-                // TODO: TEST THIS OUT
                 ...state,
-                selectedUserInfo: {...state.selectedUserInfo, followers: [...state.selectedUserInfo.followers.filter(id => id !== action.payload)]},
+                selectedUserInfo: {...state.selectedUserInfo, followers: [...state.selectedUserInfo.followers.filter(f => f._id !== action.payload)]},
                 selectedUserPosts: []
             }
         case UPDATE_PROFILE_PIC:
@@ -146,7 +145,7 @@ export default function feedReducer (state, action){
                         return {...action.payload.updatedRecipient}
                     }
                 }),
-                selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, action.payload.current]}) : (state.selectedUserInfo)
+                selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, {...action.payload.current}]}) : (state.selectedUserInfo)
             }
         case ADD_POST: 
             return {
@@ -198,7 +197,6 @@ export default function feedReducer (state, action){
                 // TODO: TEST
             }
         case DELETE_POST:
-            // TODO: ADD STUFF FOR SINGLE POST
             return {
                 ...state,
                 feedPosts: state.feedPosts.filter(p => p._id !== action.payload),
@@ -206,7 +204,6 @@ export default function feedReducer (state, action){
                 singlePost: state.singlePost && state.singlePost._id === action.payload ? null : state.singlePost 
             }
         case DELETE_COMMENT: 
-        // TODO: TEST 
         return {
             ...state,
             singlePost: state.singlePost && state.singlePost._id === action.payload.postId ?
@@ -236,7 +233,6 @@ export default function feedReducer (state, action){
             })
         }
         case LIKE_UNLIKE_COMMENT: 
-        // TODO: TEST
             return {
                 ...state,
                 singlePost: state.singlePost && state.singlePost._id === action.payload.postId ? 
@@ -279,7 +275,6 @@ export default function feedReducer (state, action){
                 })
             }
         case LIKE_UNLIKE_POST: 
-        // TODO: TEST
             feedCopy = state.feedPosts;
             newFeed = feedCopy.map(p => {
                 if (p._id === action.payload._id) {

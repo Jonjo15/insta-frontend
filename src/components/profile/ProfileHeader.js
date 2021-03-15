@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../context/auth/AuthContext'
-import { Image, Button, Icon } from "semantic-ui-react"
+import { Button, Icon } from "semantic-ui-react"
 import { Link } from "react-router-dom"
 import BioUpdateForm from './BioUpdate'
 import { useFeed } from '../../context/feed/FeedContext'
 import {Image as CloudinaryImage} from "cloudinary-react"
 export default function ProfileHeader({ user, postCount }) {
     const { state: { currentUser } } = useAuth()
-    const { cancelRequest, sendRequest, updateImage } = useFeed()
+    const { cancelRequest, sendRequest, unfollow, updateImage } = useFeed()
     // const [imageFile, setImageFile] = useState()
     const [error, setError] = useState(null)
     const fileTypes = ["image/png", "image/jpeg"]
     const buttonContent = (user) => {
-        if (user.follow_requests.includes(currentUser._id)) return "Cancel Request"
-        if (user.followers.includes(currentUser._id)) return "Unfollow"
+        if (user.follow_requests.map(r => r._id).includes(currentUser._id)) return "Cancel Request"
+        if (user.followers.map(r => r._id).includes(currentUser._id)) return "Unfollow"
         return "Send a follow request"
     }
     const handleClick = e => {
@@ -24,6 +24,7 @@ export default function ProfileHeader({ user, postCount }) {
         }
         else if (e.target.textContent === "Unfollow") {
             console.log("unfollowed")
+            unfollow(user._id, currentUser._id)
         } else if (e.target.textContent === "Cancel Request") {
             console.log("canceled")
             cancelRequest(user._id, currentUser._id)

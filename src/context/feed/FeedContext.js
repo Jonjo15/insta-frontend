@@ -22,6 +22,7 @@ import { SET_ERRORS,
     UNFOLLOW,
     LOAD_MORE_PROFILE_POSTS
 } from "./types"
+// import {useHistory} from "react-router-dom"
 import axios from "axios"
 import { useAuth } from "../auth/AuthContext";
 const FeedContext = createContext();
@@ -47,6 +48,8 @@ export function FeedProvider({children}) {
     const [state, dispatch] = useReducer(feedReducer, initialState)
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     const {unfollowFromFeed} = useAuth()
+    // let history = useHistory()
+
     useEffect(() => {
         axios.get("http://localhost:5000/").then(res => {
             console.log(res.data)
@@ -97,8 +100,7 @@ export function FeedProvider({children}) {
 
     const cancelRequest = async(id, currentId) => {
         try {
-            const res = await axios.post("http://localhost:5000/users/"+ id + "/cancel")
-            console.log(res.data)
+            await axios.post("http://localhost:5000/users/"+ id + "/cancel")
             dispatch({type: CANCEL_REQUEST, payload: {canceled: id, currentId}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to cancel follow request"}})
@@ -119,7 +121,6 @@ export function FeedProvider({children}) {
     const exploreMore = async () =>{
         try {
             const res = await axios.get("http://localhost:5000/explore/" + state.skip)
-            console.log(res.data)
             dispatch({type: ADD_EXPLORE, payload: res.data.users})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to load more"}})
@@ -128,7 +129,6 @@ export function FeedProvider({children}) {
     const addComment = async (post, currentUser, body) => {
         try {
             const res = await axios.post("http://localhost:5000/posts/"+ post._id, {body})
-            console.log(res.data)
             dispatch({type: ADD_COMMENT, payload: {post, currentUser, updatedPost: res.data.updatedPost, comment: res.data.comment}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Post the comment"}})
@@ -145,7 +145,6 @@ export function FeedProvider({children}) {
     const likeUnlikeComment = async (id, postId) => {
         try {
             const res = await axios.put("http://localhost:5000/comments/"+ id)
-            console.log(res.data)
             dispatch({type: LIKE_UNLIKE_COMMENT, payload: {updatedComment: res.data.updatedComment, postId}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to like/unlike comment"}})
@@ -160,13 +159,14 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
         }
     }
-    const setUserProfile = async (id) => {
+    const setUserProfile = async (id, history) => {
         try {
             const res = await axios.get("http://localhost:5000/users/"+ id + "/0")
             console.log(res.data)
             dispatch({type: SET_SELECTED_USER, payload: res.data})
-        } catch (error) {
-            dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
+        } catch (error) {            
+            history.push("/")
+            dispatch({type: SET_ERRORS, payload: {error: "Failed to find User"}})  
         }
     }
     const loadMoreProfilePosts = async (id, skip) => {
@@ -181,8 +181,7 @@ export function FeedProvider({children}) {
     }
     const updateBio = async(bio) => {
         try {
-            const res = await axios.put("http://localhost:5000/users/bio", {bio})
-            console.log(res.data)
+            await axios.put("http://localhost:5000/users/bio", {bio})
             dispatch({type: UPDATE_BIO, payload: bio})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to update bio"}})    
@@ -191,10 +190,8 @@ export function FeedProvider({children}) {
     const updateImage = async (base64) => {
         try {
             const res = await axios.put("http://localhost:5000/users/profile_image", {profile_pic_url: base64})
-            console.log(res.data)
             dispatch({type: UPDATE_PROFILE_PIC, payload: {url: base64, user: res.data.response}})
         } catch (error) {
-            console.log(error.message)
             dispatch({type: SET_ERRORS, payload: {error: "Failed to update the image"}})    
         }
     }
@@ -202,23 +199,18 @@ export function FeedProvider({children}) {
         dispatch({type: RESET_USER_PROFILE})
     }
     const setSinglePost = async(id) => {
-        // TODO: TEST
         try {
             const res = await axios.get("http://localhost:5000/posts/" + id)
-            console.log(res.data)
             dispatch({type: SET_SINGLE_POST, payload: res.data.post})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to get the post"}})     
         }
     }
     const addPost = async(data, user) => {
-        console.log(data, user)
         try {
             const res = await axios.post("http://localhost:5000/posts", data)
-            console.log(res.data)
             dispatch({type: ADD_POST, payload: {post: res.data.post, user}})
         } catch (error) {
-            console.log(error)
             dispatch({type: SET_ERRORS, payload: {error: "Failed to upload the post"}})       
         }
     }
