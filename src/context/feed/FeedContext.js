@@ -20,7 +20,8 @@ import { SET_ERRORS,
     RESET_SINGLE_POST,
     UPDATE_PROFILE_PIC,
     UNFOLLOW,
-    LOAD_MORE_PROFILE_POSTS
+    LOAD_MORE_PROFILE_POSTS,
+    RESET_STATE
 } from "./types"
 // import {useHistory} from "react-router-dom"
 import axios from "axios"
@@ -47,10 +48,13 @@ export const initialState = {
 export function FeedProvider({children}) {
     const [state, dispatch] = useReducer(feedReducer, initialState)
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
-    const {unfollowFromFeed} = useAuth()
+    const {unfollowFromFeed, state: {authenticated}} = useAuth()
     // let history = useHistory()
 
     useEffect(() => {
+        if (!authenticated) {
+            return
+        }
         axios.get("http://localhost:5000/").then(res => {
             console.log(res.data)
             dispatch({type: UPDATE_FEED, payload: res.data.timeline})
@@ -58,9 +62,12 @@ export function FeedProvider({children}) {
             console.error(err)
             dispatch({type: SET_ERRORS, payload:{error: "Something went wrong"}})
         })
-    }, [])
+    }, [authenticated])
     
     useEffect(() => {
+        if (!authenticated) {
+            return
+        }
         axios.get("http://localhost:5000/explore/" + state.skip).then(res => {
             dispatch({type: SET_EXPLORE, payload: res.data.users})
 
@@ -68,15 +75,22 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Something went wrong"}})
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [authenticated])
 
     useEffect(() => {
+        if(!authenticated) {
+            return
+        }
         axios.get("http://localhost:5000/recommended").then(res => {
             dispatch({type: SET_RECOMMENDED, payload: res.data.recommendedUsers})
         }).catch(err => {
             dispatch({type: SET_ERRORS, payload: {error: "Something went wrong"}})
         })
-    }, [])
+    }, [authenticated])
+
+    const resetFeedState = () => {
+        dispatch({type: RESET_STATE})
+    }
     const likeUnlike = async (id) => {
         try {
             const res = await axios.put("http://localhost:5000/posts/"+ id)
@@ -237,7 +251,7 @@ export function FeedProvider({children}) {
       resetSinglePost,
       updateBio,
       updateImage,
-
+      resetFeedState
     }
       return (
           <FeedContext.Provider value={value}>

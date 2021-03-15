@@ -1,8 +1,12 @@
-import {  SET_NOTIFICATIONS, MARK_ALL_READ, SET_ERROR } from "./types";
+import {  SET_NOTIFICATIONS, MARK_ALL_READ, SET_ERROR, RESET_STATE } from "./types";
 
 export default function notificationsReducer (state, action){
     switch(action.type) {
-        
+        case RESET_STATE: 
+            return {
+              notifications: [],
+              error: null
+            }
         case SET_ERROR: 
             return {
               ...state,

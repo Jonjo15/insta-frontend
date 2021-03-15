@@ -20,13 +20,16 @@ import {
     UPDATE_BIO,
     UNFOLLOW,
     CANCEL_REQUEST,
-    LOAD_MORE_PROFILE_POSTS
+    LOAD_MORE_PROFILE_POSTS,
+    RESET_STATE
      } from "./types";
-
+import {initialState} from "./FeedContext"
 export default function feedReducer (state, action){
     let feedCopy;
     let newFeed;
     switch(action.type) {
+        case RESET_STATE: 
+            return initialState
         case LOAD_MORE_PROFILE_POSTS: 
             return {
                 ...state,

@@ -22,7 +22,6 @@ export function AuthProvider({children}) {
 
     useEffect(() => {
         axios.get("http://localhost:5000/users/me").then(res => {
-            console.log(res.data)
             const user = {user: res.data.user[0]}
             dispatch({type: SET_USER, payload: user})
         }).catch(error => {
@@ -33,7 +32,6 @@ export function AuthProvider({children}) {
     const register = async (data) => {
         try {
             const res = await axios.post("http://localhost:5000/auth/register", data)
-            console.log(res)
             dispatch({type: SET_USER, payload: res.data})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to register"}})
@@ -53,7 +51,7 @@ export function AuthProvider({children}) {
     }
     const logout = () => {
         dispatch({type: LOG_OUT})
-        window.location.reload()
+        // window.location.reload()
     }
     const googleSignIn = async(data) => {
         try {
@@ -61,7 +59,6 @@ export function AuthProvider({children}) {
             dispatch({type: SET_USER, payload: res.data})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to sign in with google"}})
-            console.error(error)
         }
     }
     const clearErrors = () => {
@@ -78,16 +75,14 @@ export function AuthProvider({children}) {
     }
     const rejectRequest = async(id) => {
         try {
-            const res = await axios.post("http://localhost:5000/users/" + id + "/reject")
+            await axios.post("http://localhost:5000/users/" + id + "/reject")
             dispatch({type: DECLINE_REQUEST, payload: id})
         }catch(err) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to reject request"}})
         }
     }
     
-    const unfollow = async (id ) => {
-        //TODO: MAYBE
-    }
+    
     const unfollowFromFeed = (id) => {
         console.log("im here from auth context")
         dispatch({type: UNFOLLOW, payload: id})
@@ -103,7 +98,6 @@ export function AuthProvider({children}) {
       googleSignIn,
       acceptRequest,
       rejectRequest,
-      unfollow,
       unfollowFromFeed
     }
       return (
