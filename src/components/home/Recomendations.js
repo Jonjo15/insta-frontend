@@ -1,8 +1,8 @@
 import React from 'react'
 import {Link} from "react-router-dom"
 import {Grid} from "semantic-ui-react"
-import {useFeed } from "../context/feed/FeedContext"
-import UserPreview from "./UserPreview"
+import {useFeed } from "../../context/feed/FeedContext"
+import UserPreview from "../util/UserPreview"
 export default function Recomendations() {
     const {state: {recommended}} = useFeed()
     return (

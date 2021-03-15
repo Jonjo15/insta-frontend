@@ -1,8 +1,8 @@
 import {BrowserRouter, Switch, Route } from "react-router-dom"
 import {AuthProvider} from "./context/auth/AuthContext"
 import {NotificationsProvider} from "./context/notifications/NotificationsContext"
-import PrivateRoute from "./components/PrivateRoute"
-import Navbar from "./components/Navbar";
+import PrivateRoute from "./components/util/PrivateRoute"
+import Navbar from "./components/nav/Navbar";
 import Auth from "./pages/Auth"
 import Home from "./pages/Home";
 import Profile from "./pages/Profile"

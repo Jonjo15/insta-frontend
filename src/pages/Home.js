@@ -2,8 +2,8 @@ import React from 'react'
 import { Container, Grid } from "semantic-ui-react"
 import {Redirect} from "react-router-dom"
 import { useAuth } from '../context/auth/AuthContext'
-import HomeFeed from '../components/HomeFeed'
-import Recomendations from '../components/Recomendations'
+import HomeFeed from '../components/home/HomeFeed'
+import Recomendations from '../components/home/Recomendations'
 export default function Home() {
     const {state: {authenticated}} = useAuth()
     

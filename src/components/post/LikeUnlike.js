@@ -1,7 +1,7 @@
 import React from 'react'
 import {Icon, Popup } from "semantic-ui-react"
-import {useAuth} from "../context/auth/AuthContext"
-import { useFeed } from '../context/feed/FeedContext'
+import {useAuth} from "../../context/auth/AuthContext"
+import { useFeed } from '../../context/feed/FeedContext'
 import {useHistory} from "react-router-dom"
 export default function LikeUnlike({post, singlePost}) {
     const {state: {currentUser}} = useAuth()

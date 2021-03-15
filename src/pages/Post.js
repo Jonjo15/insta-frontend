@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { Container, Button, Image, Card, Icon } from "semantic-ui-react"
 import {Link, useParams, useHistory} from "react-router-dom"
-import LikeUnlike from "../components/LikeUnlike"
-import CommentLikeUnlike from "../components/CommentLikeUnlike"
+import LikeUnlike from "../components/post/LikeUnlike"
+import CommentLikeUnlike from "../components/post/CommentLikeUnlike"
 import dayjs from "dayjs"
 import {useAuth} from "../context/auth/AuthContext"
 import {useFeed} from "../context/feed/FeedContext"

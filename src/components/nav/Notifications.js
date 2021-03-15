@@ -1,7 +1,7 @@
 import React from 'react'
 import {Dropdown, Button } from "semantic-ui-react"
 import {Link} from "react-router-dom"
-import { useNotifications } from '../context/notifications/NotificationsContext'
+import { useNotifications } from '../../context/notifications/NotificationsContext'
 export default function Notifications() {
     const {markNotificationsRead, state: {notifications}} = useNotifications()
     const markAllRead = e => {

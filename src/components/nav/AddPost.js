@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal, Button, Popup, Form } from "semantic-ui-react"
-import { useFeed } from "../context/feed/FeedContext"
-import { useAuth } from "../context/auth/AuthContext"
+import { useFeed } from "../../context/feed/FeedContext"
+import { useAuth } from "../../context/auth/AuthContext"
 
 function exampleReducer(state, action) {
   switch (action.type) {

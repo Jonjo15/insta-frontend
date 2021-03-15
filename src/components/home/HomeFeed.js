@@ -1,6 +1,6 @@
 import React from 'react'
-import { useFeed } from '../context/feed/FeedContext'
-import Post from "./Post"
+import { useFeed } from '../../context/feed/FeedContext'
+import Post from "../post/Post"
 import Skeleton from "react-loading-skeleton"
 export default function HomeFeed() {
     const {state: {feedPosts, loading}} = useFeed()

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Card, Button, Image} from "semantic-ui-react" 
-import { useAuth } from '../context/auth/AuthContext'
+import { useAuth } from '../../context/auth/AuthContext'
 export default function SingleRequest({request}) {
     const {acceptRequest, rejectRequest} = useAuth()
     const handleAccept = e => {

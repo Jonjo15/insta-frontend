@@ -1,9 +1,9 @@
 import React from 'react'
 import {Dropdown, Button} from "semantic-ui-react"
 import {Link} from "react-router-dom"
-import { useAuth } from '../context/auth/AuthContext'
-import { useNotifications } from '../context/notifications/NotificationsContext'
-import { useFeed } from '../context/feed/FeedContext'
+import { useAuth } from '../../context/auth/AuthContext'
+import { useNotifications } from '../../context/notifications/NotificationsContext'
+import { useFeed } from '../../context/feed/FeedContext'
 export default function NavUserDropdown() {
     const {logout, state: {currentUser}} = useAuth()
     const {resetNotificationState} = useNotifications()

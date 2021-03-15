@@ -1,7 +1,7 @@
 import React  from 'react'
 import {Card, Image, Button} from "semantic-ui-react"
-import {useAuth} from "../context/auth/AuthContext"
-import {useFeed} from "../context/feed/FeedContext"
+import {useAuth} from "../../context/auth/AuthContext"
+import {useFeed} from "../../context/feed/FeedContext"
 import {Link} from "react-router-dom"
 
 const createMetaText = (followers, userId) => {

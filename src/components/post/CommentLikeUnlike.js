@@ -1,7 +1,7 @@
 import React from 'react'
 import {Icon} from "semantic-ui-react"
-import {useAuth} from "../context/auth/AuthContext"
-import {useFeed} from "../context/feed/FeedContext"
+import {useAuth} from "../../context/auth/AuthContext"
+import {useFeed} from "../../context/feed/FeedContext"
 export default function CommentLikeUnlike({comment}) {
     const {state: {currentUser}} = useAuth()
     const {likeUnlikeComment} = useFeed()

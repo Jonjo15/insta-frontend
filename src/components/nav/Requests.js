@@ -1,7 +1,7 @@
 import React from 'react'
 import {Dropdown} from "semantic-ui-react"
-import { useAuth } from '../context/auth/AuthContext'
-import SingleRequest from './SingleRequest'
+import { useAuth } from '../../context/auth/AuthContext'
+import SingleRequest from '../util/SingleRequest'
 
 
 export default function Requests() {

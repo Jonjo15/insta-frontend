@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Button} from "semantic-ui-react"
 import {useFeed} from "../context/feed/FeedContext"
-import UserPreview from "../components/UserPreview"
+import UserPreview from "../components/util/UserPreview"
 export default function Explore() {
     const {exploreMore, state: {explore, exploreEndFetch}} = useFeed()
     const handleClick = e => {

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Image} from "semantic-ui-react"
-import Modal from "../Modal"
+import Modal from "../post/Modal"
 export default function PostPreview({post}) {
     const [open, setOpen] = useState(false)
     return (

@@ -5,8 +5,8 @@ import dayjs from "dayjs"
 import { Image as CloudinaryImage } from "cloudinary-react"
 import LikeUnlike from "./LikeUnlike"
 import CommentLikeUnlike from "./CommentLikeUnlike"
-import { useFeed } from "../context/feed/FeedContext"
-import { useAuth } from "../context/auth/AuthContext"
+import { useFeed } from "../../context/feed/FeedContext"
+import { useAuth } from "../../context/auth/AuthContext"
 var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 export default function PostModal({ post, open, setOpen }) {
