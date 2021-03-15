@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import { Container, Form, Button, Input } from 'semantic-ui-react'
 import GoogleLogin from 'react-google-login';
 import { useAuth } from '../context/auth/AuthContext';
-// import {useHistory} from "react-router-dom"
 export default function LoginRegisterForm() {
     const {login,clearErrors, register, googleSignIn, state: {error}} = useAuth()
     const [isLogin, setIsLogin] = useState(false)

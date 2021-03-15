@@ -34,7 +34,6 @@ export default function feedReducer (state, action){
             return {
                 ...state,
                 selectedUserPosts: [...state.selectedUserPosts, ...action.payload]
-                // TODO: TEST
             }
         case CANCEL_REQUEST: 
             return {

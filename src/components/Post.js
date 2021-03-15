@@ -4,7 +4,6 @@ import {Link} from "react-router-dom"
 import LikeUnlike from "./LikeUnlike"
 import dayjs from "dayjs"
 import Modal from "./Modal"
-// TODO: USE CLOUDINARY IMAGE
 import {Image as CloudinaryImage} from "cloudinary-react"
 var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
@@ -24,7 +23,6 @@ export default function Post({post}) {
                     </Card.Content>
                 </Card>
             </Card.Header>
-            {/* TODO: CHANGE BELOW TO INCLUDE POST PICTURE INSTEAD OF PROFILE PICTURE FOR TESTING */}
             <Image style={{cursor: "pointer"}} src={post.picture} wrapped ui={false} onClick={e => setOpen(true)}/>
             <Card.Content>
                 <Card.Meta>

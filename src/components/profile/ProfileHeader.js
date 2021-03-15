@@ -8,7 +8,6 @@ import {Image as CloudinaryImage} from "cloudinary-react"
 export default function ProfileHeader({ user, postCount }) {
     const { state: { currentUser } } = useAuth()
     const { cancelRequest, sendRequest, unfollow, updateImage } = useFeed()
-    // const [imageFile, setImageFile] = useState()
     const [error, setError] = useState(null)
     const fileTypes = ["image/png", "image/jpeg"]
     const buttonContent = (user) => {
@@ -19,14 +18,11 @@ export default function ProfileHeader({ user, postCount }) {
     const handleClick = e => {
         e.target.disabled = true
         if (e.target.textContent === "Send a follow request") {
-            console.log("request sent")
             sendRequest(user._id, currentUser._id)
         }
         else if (e.target.textContent === "Unfollow") {
-            console.log("unfollowed")
             unfollow(user._id, currentUser._id)
         } else if (e.target.textContent === "Cancel Request") {
-            console.log("canceled")
             cancelRequest(user._id, currentUser._id)
         }
         e.target.disabled = false
@@ -37,21 +33,10 @@ export default function ProfileHeader({ user, postCount }) {
             setError(null)
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                // let formData = new FormData();
-                // formData.append('file', file);
-                // formData.append('upload_preset', "moxqjptj");
+            reader.onloadend = () => { 
                 updateImage(reader.result)
-                // fetch("https://api.cloudinary.com/v1_1/jonjo15/image/upload", {
-                //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                //     body: formData
-                //   })
-                //   .then(res => {return res.json()})
-                //   .then(img => updateImage(img.secure_url))
-                //   .catch(err => console.log(err));
             };
             reader.onerror = () => {
-                console.error('AHHHHHHHH!!');
                 setError('something went wrong!');
             };
         }

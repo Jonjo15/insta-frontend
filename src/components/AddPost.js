@@ -21,7 +21,6 @@ export default function AddPost() {
   const { open } = state
   const [body, setBody] = useState("")
   const [file, setFile] = useState(null)
-  // const [fileName, setFileName] = useState("")
   const [error, setError] = useState("")
   const { addPost } = useFeed()
   const { state: { currentUser } } = useAuth()
@@ -41,7 +40,6 @@ export default function AddPost() {
 
     }
   }
-  //TODO: FINISH IMAGE UPLOAD
   const handleChange = e => {
     let file = e.target.files[0];
     if (file && fileTypes.includes(file.type)) {

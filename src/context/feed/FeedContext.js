@@ -23,7 +23,6 @@ import { SET_ERRORS,
     LOAD_MORE_PROFILE_POSTS,
     RESET_STATE
 } from "./types"
-// import {useHistory} from "react-router-dom"
 import axios from "axios"
 import { useAuth } from "../auth/AuthContext";
 const FeedContext = createContext();
@@ -50,7 +49,6 @@ export function FeedProvider({children}) {
     const [state, dispatch] = useReducer(feedReducer, initialState)
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     const {unfollowFromFeed, state: {authenticated}} = useAuth()
-    // let history = useHistory()
 
     useEffect(() => {
         if (!authenticated) {
@@ -190,7 +188,6 @@ export function FeedProvider({children}) {
                 setNoMorePhotosLeft(true)
             }
             dispatch({type: LOAD_MORE_PROFILE_POSTS, payload: res.data.posts})
-            //TODO: FINISH
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
         }

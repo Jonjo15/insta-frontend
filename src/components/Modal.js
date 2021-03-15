@@ -10,7 +10,6 @@ import { useAuth } from "../context/auth/AuthContext"
 var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 export default function PostModal({ post, open, setOpen }) {
-    // const [open, setOpen] = useState(false)
     const { addComment, deleteComment } = useFeed()
     const { state: { currentUser } } = useAuth()
     const [body, setBody] = useState("")
