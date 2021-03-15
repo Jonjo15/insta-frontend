@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Container, Button, Image, Card, Icon } from "semantic-ui-react"
-import {Link, useParams} from "react-router-dom"
+import {Link, useParams, useHistory} from "react-router-dom"
 import LikeUnlike from "../components/LikeUnlike"
 import CommentLikeUnlike from "../components/CommentLikeUnlike"
 import dayjs from "dayjs"
@@ -9,6 +9,7 @@ import {useFeed} from "../context/feed/FeedContext"
 import {Image as CloudinaryImage} from "cloudinary-react"
 export default function Post() {
     const params = useParams()
+    const history = useHistory()
     const [body, setBody] = useState("")
     const {state: {currentUser}} = useAuth()
     const {setSinglePost, resetSinglePost, addComment, deleteComment, state: {singlePost: post}} = useFeed()
@@ -23,7 +24,7 @@ export default function Post() {
         deleteComment(id, post._id)
     }
     useEffect(() => {
-        setSinglePost(params.postId)
+        setSinglePost(params.postId, history)
 
         return () => resetSinglePost()
     // eslint-disable-next-line react-hooks/exhaustive-deps

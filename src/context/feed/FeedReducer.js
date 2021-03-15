@@ -36,7 +36,7 @@ export default function feedReducer (state, action){
         case CANCEL_REQUEST: 
             return {
                 ...state,
-                selectedUserInfo: state.selectedUserInfo ? {...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests.filter(id => id !== action.payload.currentId)]} : state.selectedUserInfo,
+                selectedUserInfo: state.selectedUserInfo ? {...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests.filter(f => f._id !== action.payload.currentId)]} : state.selectedUserInfo,
                 explore: state.explore.map(u => {
                     if (u._id === action.payload.canceled) {
                         u.follow_requests = u.follow_requests.filter(id => id !== action.payload.currentId )
@@ -61,7 +61,6 @@ export default function feedReducer (state, action){
                 selectedUserPosts: []
             }
         case UPDATE_PROFILE_PIC:
-            // TODO: TEST 
             return {
                 ...state,
                 selectedUserInfo: {...state.selectedUserInfo, profile_pic_url: action.payload.user.profile_pic_url, profile_public_id: action.payload.user.profile_public_id},
@@ -145,7 +144,7 @@ export default function feedReducer (state, action){
                         return {...action.payload.updatedRecipient}
                     }
                 }),
-                selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, {...action.payload.current}]}) : (state.selectedUserInfo)
+                selectedUserInfo: state.selectedUserInfo?._id === action.payload.updatedRecipient._id ? ({...state.selectedUserInfo, follow_requests: [...state.selectedUserInfo.follow_requests, {_id: action.payload.current}]}) : (state.selectedUserInfo)
             }
         case ADD_POST: 
             return {
@@ -194,7 +193,6 @@ export default function feedReducer (state, action){
                     _id: action.payload.currentUser._id,
                     profile_pic_url: action.payload.currentUser.profile_pic_url
                 }}]} : null
-                // TODO: TEST
             }
         case DELETE_POST:
             return {

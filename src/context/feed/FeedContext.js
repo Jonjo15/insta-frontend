@@ -198,11 +198,12 @@ export function FeedProvider({children}) {
     const resetProfile = () => {
         dispatch({type: RESET_USER_PROFILE})
     }
-    const setSinglePost = async(id) => {
+    const setSinglePost = async(id, history) => {
         try {
             const res = await axios.get("http://localhost:5000/posts/" + id)
             dispatch({type: SET_SINGLE_POST, payload: res.data.post})
         } catch (error) {
+            history.push("/")
             dispatch({type: SET_ERRORS, payload: {error: "Failed to get the post"}})     
         }
     }
