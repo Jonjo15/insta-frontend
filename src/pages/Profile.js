@@ -15,7 +15,7 @@ export default function Profile() {
     const {setUserProfile,loadMoreProfilePosts, resetProfile, state: {selectedUserInfo, selectedUserPosts, postCount}} = useFeed()
     useEffect(() => {
         document.title = params.userId === currentUser._id ? "You" : "Profile"
-        setUserProfile(params.userId, history)
+        setUserProfile(params.userId, history, setNoMorePhotosLeft)
 
         return () => resetProfile()
             // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -170,10 +170,12 @@ export function FeedProvider({children}) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete Post"}})  
         }
     }
-    const setUserProfile = async (id, history) => {
+    const setUserProfile = async (id, history, set) => {
         try {
             const res = await axios.get("http://localhost:5000/users/"+ id + "/0")
-            console.log(res.data)
+            if(res.data.posts.length < 9) {
+                set(true)
+            }
             dispatch({type: SET_SELECTED_USER, payload: res.data})
         } catch (error) {            
             history.push("/")

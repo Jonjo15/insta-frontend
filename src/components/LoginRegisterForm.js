@@ -16,9 +16,9 @@ export default function LoginRegisterForm() {
             register({username, email , password})  
         }
     }
-    const handleGoogle = async response => {
+    const handleGoogle = response => {
         console.log(response.accessToken)
-        await googleSignIn({access_token: response.accessToken})
+        googleSignIn({access_token: response.accessToken})
     }
     return (
         <Container>
@@ -38,9 +38,6 @@ export default function LoginRegisterForm() {
                 </Form.Field>
                 <Button type="submit">Submit</Button>
             </Form>
-            {/* <Button className="center" onClick={handleGoogle} color='google plus'>
-                <Icon name='google plus' /> Sign In With Google
-            </Button> */}
             <div className="below-form-buttons">
                 <GoogleLogin
                     clientId="475278432981-mgmm2m3plbfcr09htfdjnvd0ha1ik99j.apps.googleusercontent.com"
@@ -57,8 +54,6 @@ export default function LoginRegisterForm() {
                         }} content="Here"/>
                 </div>
             </div>
-            
-            
         </Container>
     )
 }

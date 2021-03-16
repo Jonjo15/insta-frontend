@@ -21,12 +21,14 @@ export function AuthProvider({children}) {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
 
     useEffect(() => {
+        
         axios.get("http://localhost:5000/users/me").then(res => {
             const user = {user: res.data.user[0]}
             dispatch({type: SET_USER, payload: user})
         }).catch(error => {
             dispatch({type: SET_ERRORS, payload: {error: state.authenticated ? "Failed to get your user data" : null}})
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const register = async (data) => {
