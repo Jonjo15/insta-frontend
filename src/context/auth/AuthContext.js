@@ -57,7 +57,7 @@ export function AuthProvider({children}) {
             const res = await axios.post("https://vast-island-68988.herokuapp.com/auth/google", data)
             dispatch({type: SET_USER, payload: res.data})
         } catch (error) {
-            dispatch({type: SET_ERRORS, payload: {error: "Failed to sign in with google"}})
+            dispatch({type: SET_ERRORS, payload: {error: ""}})
         }
     }
     const clearErrors = () => {

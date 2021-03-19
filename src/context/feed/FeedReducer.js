@@ -130,7 +130,6 @@ export default function feedReducer (state, action){
                 skip: state.skip + 25
             }
         case SEND_FOLLOW_REQUEST:
-            console.log(state.recommended, "REDUCER")
             return {
                 ...state,
                 explore: state.explore.map(u => {
