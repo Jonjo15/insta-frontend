@@ -37,7 +37,6 @@ export function AuthProvider({children}) {
             dispatch({type: SET_USER, payload: res.data})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to register"}})
-            console.log(error)
         }
     }
     
@@ -48,7 +47,6 @@ export function AuthProvider({children}) {
         }
         catch(err) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to log in"}})
-            console.log(err)
         }
     }
     const logout = () => {
@@ -85,7 +83,6 @@ export function AuthProvider({children}) {
     
     
     const unfollowFromFeed = (id) => {
-        console.log("im here from auth context")
         dispatch({type: UNFOLLOW, payload: id})
     }
 

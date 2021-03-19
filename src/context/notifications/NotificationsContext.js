@@ -27,7 +27,6 @@ export function NotificationsProvider({children}) {
         axios.get("https://vast-island-68988.herokuapp.com/notifications/").then(res => {
             dispatch({type: SET_NOTIFICATIONS, payload: res.data})
         }).catch(err => {
-            console.error(err)
             dispatch({type: SET_ERROR})
         })
     }, [authenticated])

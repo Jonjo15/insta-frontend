@@ -55,10 +55,8 @@ export function FeedProvider({children}) {
             return
         }
         axios.get("https://vast-island-68988.herokuapp.com/").then(res => {
-            console.log(res.data)
             dispatch({type: UPDATE_FEED, payload: res.data.timeline})
         }).catch(err => {
-            console.error(err)
             dispatch({type: SET_ERRORS, payload:{error: "Something went wrong"}})
         })
     }, [authenticated])
