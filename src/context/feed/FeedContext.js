@@ -194,7 +194,7 @@ export function FeedProvider({children}) {
     }
     const updateBio = async(bio) => {
         try {
-            await axios.put("http://localhost:5000/users/bio", {bio})
+            await axios.put("https://vast-island-68988.herokuapp.com/users/bio", {bio})
             dispatch({type: UPDATE_BIO, payload: bio})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to update bio"}})    
@@ -202,7 +202,7 @@ export function FeedProvider({children}) {
     }
     const updateImage = async (base64) => {
         try {
-            const res = await axios.put("http://localhost:5000/users/profile_image", {profile_pic_url: base64})
+            const res = await axios.put("https://vast-island-68988.herokuapp.com/profile_image", {profile_pic_url: base64})
             dispatch({type: UPDATE_PROFILE_PIC, payload: {url: base64, user: res.data.response}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to update the image"}})    
@@ -213,7 +213,7 @@ export function FeedProvider({children}) {
     }
     const setSinglePost = async(id, history) => {
         try {
-            const res = await axios.get("http://localhost:5000/posts/" + id)
+            const res = await axios.get("https://vast-island-68988.herokuapp.com/posts/" + id)
             dispatch({type: SET_SINGLE_POST, payload: res.data.post})
         } catch (error) {
             history.push("/")
@@ -222,7 +222,7 @@ export function FeedProvider({children}) {
     }
     const addPost = async(data, user) => {
         try {
-            const res = await axios.post("http://localhost:5000/posts", data)
+            const res = await axios.post("https://vast-island-68988.herokuapp.com/posts", data)
             dispatch({type: ADD_POST, payload: {post: res.data.post, user}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to upload the post"}})       
