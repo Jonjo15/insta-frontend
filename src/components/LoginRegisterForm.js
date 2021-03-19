@@ -42,6 +42,7 @@ export default function LoginRegisterForm() {
                 <GoogleLogin
                     clientId="475278432981-mgmm2m3plbfcr09htfdjnvd0ha1ik99j.apps.googleusercontent.com"
                     buttonText="Sign In With Google"
+                    autoLoad={false}
                     onSuccess={handleGoogle}
                     onFailure={handleGoogle}
                     className="mb-10"
