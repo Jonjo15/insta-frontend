@@ -24,7 +24,7 @@ export function NotificationsProvider({children}) {
         if (!authenticated) {
             return
         }
-        axios.get("http://localhost:5000/notifications/").then(res => {
+        axios.get("https://vast-island-68988.herokuapp.com/notifications/").then(res => {
             dispatch({type: SET_NOTIFICATIONS, payload: res.data})
         }).catch(err => {
             console.error(err)
@@ -34,7 +34,7 @@ export function NotificationsProvider({children}) {
     
     const markNotificationsRead = async (data) => {
         try {
-            axios.put("http://localhost:5000/notifications/", data)
+            axios.put("https://vast-island-68988.herokuapp.com/notifications/", data)
             dispatch({type: MARK_ALL_READ})
         }catch(err) {
             dispatch({type: SET_ERROR})

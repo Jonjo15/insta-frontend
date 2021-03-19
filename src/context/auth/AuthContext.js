@@ -22,7 +22,7 @@ export function AuthProvider({children}) {
 
     useEffect(() => {
         
-        axios.get("http://localhost:5000/users/me").then(res => {
+        axios.get("https://vast-island-68988.herokuapp.com/users/me").then(res => {
             const user = {user: res.data.user[0]}
             dispatch({type: SET_USER, payload: user})
         }).catch(error => {
@@ -33,7 +33,7 @@ export function AuthProvider({children}) {
 
     const register = async (data) => {
         try {
-            const res = await axios.post("http://localhost:5000/auth/register", data)
+            const res = await axios.post("https://vast-island-68988.herokuapp.com/auth/register", data)
             dispatch({type: SET_USER, payload: res.data})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to register"}})
@@ -43,7 +43,7 @@ export function AuthProvider({children}) {
     
     const login = async (data) => {
         try {
-            const res = await axios.post("http://localhost:5000/auth/login", data)
+            const res = await axios.post("https://vast-island-68988.herokuapp.com/auth/login", data)
             dispatch({type: SET_USER, payload: res.data})
         }
         catch(err) {
@@ -56,7 +56,7 @@ export function AuthProvider({children}) {
     }
     const googleSignIn = async(data) => {
         try {
-            const res = await axios.post("http://localhost:5000/auth/google", data)
+            const res = await axios.post("https://vast-island-68988.herokuapp.com/auth/google", data)
             dispatch({type: SET_USER, payload: res.data})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to sign in with google"}})
@@ -67,7 +67,7 @@ export function AuthProvider({children}) {
     }
     const acceptRequest = async(id) => {
         try {
-            await axios.post("http://localhost:5000/users/"+ id + "/accept")
+            await axios.post("https://vast-island-68988.herokuapp.com/users/"+ id + "/accept")
             dispatch({type: ACCEPT_REQUEST, payload: id})
         }
         catch(error) {
@@ -76,7 +76,7 @@ export function AuthProvider({children}) {
     }
     const rejectRequest = async(id) => {
         try {
-            await axios.post("http://localhost:5000/users/" + id + "/reject")
+            await axios.post("https://vast-island-68988.herokuapp.com/users/" + id + "/reject")
             dispatch({type: DECLINE_REQUEST, payload: id})
         }catch(err) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to reject request"}})

@@ -54,7 +54,7 @@ export function FeedProvider({children}) {
         if (!authenticated) {
             return
         }
-        axios.get("http://localhost:5000/").then(res => {
+        axios.get("https://vast-island-68988.herokuapp.com/").then(res => {
             console.log(res.data)
             dispatch({type: UPDATE_FEED, payload: res.data.timeline})
         }).catch(err => {
@@ -67,7 +67,7 @@ export function FeedProvider({children}) {
         if (!authenticated) {
             return
         }
-        axios.get("http://localhost:5000/explore/" + state.skip).then(res => {
+        axios.get("https://vast-island-68988.herokuapp.com/explore/" + state.skip).then(res => {
             dispatch({type: SET_EXPLORE, payload: res.data.users})
 
         }).catch(err => {
@@ -80,7 +80,7 @@ export function FeedProvider({children}) {
         if(!authenticated) {
             return
         }
-        axios.get("http://localhost:5000/recommended").then(res => {
+        axios.get("https://vast-island-68988.herokuapp.com/recommended").then(res => {
             dispatch({type: SET_RECOMMENDED, payload: res.data.recommendedUsers})
         }).catch(err => {
             dispatch({type: SET_ERRORS, payload: {error: "Something went wrong"}})
@@ -92,7 +92,7 @@ export function FeedProvider({children}) {
     }
     const likeUnlike = async (id) => {
         try {
-            const res = await axios.put("http://localhost:5000/posts/"+ id)
+            const res = await axios.put("https://vast-island-68988.herokuapp.com/posts/"+ id)
             dispatch({type: LIKE_UNLIKE_POST, payload: res.data.updatedPost})
 
         } catch (err) {
@@ -102,7 +102,7 @@ export function FeedProvider({children}) {
     const sendRequest = async (recipientId, current) => {
         let error =""
         try {
-            const res = await axios.post("http://localhost:5000/users/"+ recipientId)
+            const res = await axios.post("https://vast-island-68988.herokuapp.com/users/"+ recipientId)
             dispatch({type: SEND_FOLLOW_REQUEST, payload: {updatedRecipient: res.data.updatedRecipient, current}})
         } catch (err) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to send follow request"}})
@@ -113,7 +113,7 @@ export function FeedProvider({children}) {
 
     const cancelRequest = async(id, currentId) => {
         try {
-            await axios.post("http://localhost:5000/users/"+ id + "/cancel")
+            await axios.post("https://vast-island-68988.herokuapp.com/users/"+ id + "/cancel")
             dispatch({type: CANCEL_REQUEST, payload: {canceled: id, currentId}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to cancel follow request"}})
@@ -122,7 +122,7 @@ export function FeedProvider({children}) {
 
     const unfollow = async (id, currentId) => {
         try {
-            await axios.post("http://localhost:5000/users/"+ id + "/unfollow")
+            await axios.post("https://vast-island-68988.herokuapp.com/users/"+ id + "/unfollow")
             dispatch({type: UNFOLLOW, payload: currentId})
             unfollowFromFeed(id)
         } catch (error) {
@@ -131,7 +131,7 @@ export function FeedProvider({children}) {
     }
     const exploreMore = async () =>{
         try {
-            const res = await axios.get("http://localhost:5000/explore/" + state.skip)
+            const res = await axios.get("https://vast-island-68988.herokuapp.com/explore/" + state.skip)
             dispatch({type: ADD_EXPLORE, payload: res.data.users})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to load more"}})
@@ -139,7 +139,7 @@ export function FeedProvider({children}) {
     }
     const addComment = async (post, currentUser, body) => {
         try {
-            const res = await axios.post("http://localhost:5000/posts/"+ post._id, {body})
+            const res = await axios.post("https://vast-island-68988.herokuapp.com/posts/"+ post._id, {body})
             dispatch({type: ADD_COMMENT, payload: {post, currentUser, updatedPost: res.data.updatedPost, comment: res.data.comment}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Post the comment"}})
@@ -147,7 +147,7 @@ export function FeedProvider({children}) {
     }
     const deleteComment = async (id, postId) => {
         try {
-            await axios.delete("http://localhost:5000/comments/" + id)
+            await axios.delete("https://vast-island-68988.herokuapp.com/comments/" + id)
             dispatch({type: DELETE_COMMENT, payload: {commentId: id, postId}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to delete comment"}})
@@ -155,7 +155,7 @@ export function FeedProvider({children}) {
     }
     const likeUnlikeComment = async (id, postId) => {
         try {
-            const res = await axios.put("http://localhost:5000/comments/"+ id)
+            const res = await axios.put("https://vast-island-68988.herokuapp.com/comments/"+ id)
             dispatch({type: LIKE_UNLIKE_COMMENT, payload: {updatedComment: res.data.updatedComment, postId}})
         } catch (error) {
             dispatch({type: SET_ERRORS, payload: {error: "Failed to like/unlike comment"}})
@@ -163,7 +163,7 @@ export function FeedProvider({children}) {
     }
     const deletePost = async (id) => {
         try {
-            const res = await axios.delete("http://localhost:5000/posts/" + id)
+            const res = await axios.delete("https://vast-island-68988.herokuapp.com/posts/" + id)
             console.log(res.data)
             dispatch({type: DELETE_POST, payload: id})
         } catch (error) {
@@ -172,7 +172,7 @@ export function FeedProvider({children}) {
     }
     const setUserProfile = async (id, history, set) => {
         try {
-            const res = await axios.get("http://localhost:5000/users/"+ id + "/0")
+            const res = await axios.get("https://vast-island-68988.herokuapp.com/users/"+ id + "/0")
             if(res.data.posts.length < 9) {
                 set(true)
             }
@@ -184,7 +184,7 @@ export function FeedProvider({children}) {
     }
     const loadMoreProfilePosts = async (id, skip, setNoMorePhotosLeft) => {
         try {
-            const res = await axios.get("http://localhost:5000/users/"+ id + "/" + (skip + state.profileSkip))
+            const res = await axios.get("https://vast-island-68988.herokuapp.com/users/"+ id + "/" + (skip + state.profileSkip))
             console.log(res.data)
             if (res.data.posts.length < 9) {
                 setNoMorePhotosLeft(true)
